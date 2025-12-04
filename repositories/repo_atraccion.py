@@ -16,6 +16,11 @@ class RepoAtraccion:
     @staticmethod
     def search_all():
         return list(Atraccion.select())
+    
+    @staticmethod
+    def search_by_id(id):
+        return Atraccion.get(Atraccion.id ==  id)
+    
     @staticmethod
     def search_disp():
         
