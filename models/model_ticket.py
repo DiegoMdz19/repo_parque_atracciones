@@ -5,7 +5,7 @@ from datetime import datetime
 from models.model_visitante import Visitante
 from models.model_atraccion import Atraccion
 
-class TicketModel(BaseModel):
+class Ticket(BaseModel):
     visitante_id = ForeignKeyField(Visitante, backref='tickets', on_delete= "CASCADE", on_update="CASCADE")
     atraccion_id = ForeignKeyField(Atraccion, backref='tickets', null = True) # null si vale para cualquier atraccion
     fecha_compra = DateTimeField()
