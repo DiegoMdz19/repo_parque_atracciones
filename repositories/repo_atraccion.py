@@ -37,7 +37,20 @@ class RepoAtraccion:
             Atraccion.activa = True
         atrac.save()
         return atrac
-    
+
     @staticmethod
     def delete(id):
         return Atraccion.delete().where(Atraccion.id == id)
+
+    @staticmethod
+    def nueva_caracteristica_atraccion(id_atraccion, caracteristica):
+        atraccion = Atraccion.get(Atraccion.id == id_atraccion)
+        if not atraccion:
+            return f"Error, la atracción [{id_atraccion}] no existe"
+        if not caracteristica:
+            return f"Error, introduce una caracteristica [{caracteristica}] válida"
+        caracteristicas = atraccion.detalles["caracteristicas"]
+        if caracteristica in caracteristicas:
+            return f"Error, la caracteristica ya existe"
+        json_struct = {"caracteristicas":{}}
+

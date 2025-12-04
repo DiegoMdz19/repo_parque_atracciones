@@ -1,8 +1,22 @@
 from peewee import *
 from playhouse import postgres_ext
-from models.model_ticket import TicketModel
+from models.model_ticket import Ticket
 from models.model_visitante import VisitanteModel
 from models.model_atraccion import AtraccionModel
 
 class RepoTicket:
-    pass
+    @staticmethod
+    def cambiar_precio_ticket(id_ticket, precio_nuevo):
+        ticket = Ticket.get(Ticket.id == id_ticket)
+        if ticket:
+            if precio_nuevo > 0:
+                ticket.detalles_compras["precio"] = precio_nuevo
+                ticket.save()
+                return ticket
+            else:
+                return "Error, el nuevo precio no es válido"
+        else:
+            return "Error, el ticket no existe"
+
+
+    

@@ -26,6 +26,7 @@ class RepoVisitante:
     def delete(id):
         return Visitante.delete().where(Visitante.id == id)
     
+    @staticmethod
     def visit_extremas():
         json_struct = {"tipo_favorito": ["extrema"]}
         
@@ -36,5 +37,20 @@ class RepoVisitante:
 
         return list(visit)
     
+    @staticmethod
     def visit_tickets():
         return list(Visitante.select().where(Ticket.visiante_id == Visitante.id))
+    
+    @staticmethod
+    def eliminar_restriccion(id_visitante, restriccion):
+        visitante = Visitante.get(Visitante.id == id_visitante)
+        if not visitante:
+            return f"Error, el visitante con id [{id_visitante}] no existe"
+        restricciones_actuales = visitante.preferencias
+        if not restricciones_actuales:
+            return f"Error, la restriccion [{restriccion}] no existe"
+        
+        del restricciones_actuales["restricciones"][restriccion]
+
+        restricciones_actuales.save()
+        print("Borrado con éxito")
