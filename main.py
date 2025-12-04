@@ -3,9 +3,14 @@ from models.model_visitante import Visitante
 from models.model_atraccion import Atraccion
 from models.model_ticket import Ticket
 from database import db, inicializar_base
+from ingesta import ingesta_datos
+import time
 
-inicializar_base([Visitante,Atraccion,Ticket])
-print("Base de datos inicializada correctamente, tablas reseteadas")
+#inicializar_base([Visitante,Atraccion,Ticket])
+#print("Base de datos inicializada correctamente, tablas reseteadas")
+#ingesta_datos()
+print("Iniciando menú Pichalandia...")
+time.sleep(1)
 while True:
     print("----MENU PICHALANDIA----\n" \
         "\n1. Visitantes\n" \
