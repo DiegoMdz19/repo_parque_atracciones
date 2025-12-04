@@ -43,6 +43,27 @@ class RepoAtraccion:
         return Atraccion.delete().where(Atraccion.id == id)
 
     @staticmethod
+    def mayor_cientoveinte():
+        visit = (
+            Atraccion.select()
+            .where(Atraccion.detalles["duracion_segundos"] > 120)
+        )
+
+        return list(visit)
+    
+    @staticmethod
+    def mayor_ocho():
+        visit = (
+            Atraccion.select()
+            .where(Atraccion.detalles["intensidad"] > 7)
+        )
+
+        return list(visit)
+
+
+
+
+    @staticmethod
     def nueva_caracteristica_atraccion(id_atraccion, caracteristica):
         atraccion = Atraccion.get(Atraccion.id == id_atraccion)
         if not atraccion:
