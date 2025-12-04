@@ -10,14 +10,12 @@ class Ticket(BaseModel):
     atraccion_id = ForeignKeyField(Atraccion, backref='tickets', null = True) # null si vale para cualquier atraccion
     fecha_compra = DateTimeField()
     fecha_visita = DateField()
-    tipo_ticket = TextField(constraints= Check("tipo_ticket IN ('general','colegio','empleado')"))
+    tipo_ticket = TextField(constraints= [Check("tipo_ticket IN ('general','colegio','empleado')")])
     detalles_compra = postgres_ext.BinaryJSONField(default = {
-        "tipo_favorito": "extrema",
-        "restricciones": ["problemas_cardiacos"],
-        "historial_visitas": [
-            {"fecha": "2024-06-15", "atracciones_visitadas": 8},
-            {"fecha": "2024-08-20", "atracciones_visitadas": 12}
-        ]
+        "precio": "45.99",
+        "descuentos_aplicados": ["estudiante","early_bird"],
+        "servicios_extra": ["fast_pass","comida_incluida"],
+        "metodo_pago": "tarjeta"
     })
     usado = BooleanField(default=False)
     fecha_uso = DateTimeField(null = True)
