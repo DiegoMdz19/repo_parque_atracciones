@@ -42,11 +42,21 @@ class RepoAtraccion:
     @staticmethod
     def nueva_caracteristica_atraccion(id_atraccion, caracteristica):
         atraccion = Atraccion.get(Atraccion.id == id_atraccion)
+
         if not atraccion:
             return f"Error, la atracción [{id_atraccion}] no existe"
         if not caracteristica:
             return f"Error, introduce una caracteristica [{caracteristica}] válida"
+        
         caracteristicas = atraccion.detalles["caracteristicas"]
-        if caracteristica in caracteristicas:
+
+        if caracteristica not in caracteristicas:
+            caracteristicas.append(caracteristica)
+            atraccion.detalles["caracteristicas"] = caracteristicas
+            atraccion.save()
+
+        else:
             return f"Error, la caracteristica ya existe"
-        json_struct = {"caracteristicas":{}}
+        
+        return atraccion
+

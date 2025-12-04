@@ -1,8 +1,8 @@
 from peewee import *
 from playhouse import postgres_ext
 from models.model_ticket import Ticket
-from models.model_visitante import VisitanteModel
-from models.model_atraccion import AtraccionModel
+from models.model_visitante import Visitante
+from models.model_atraccion import Atraccion
 
 class RepoTicket:
     @staticmethod
@@ -17,6 +17,17 @@ class RepoTicket:
                 return "Error, el nuevo precio no es válido"
         else:
             return "Error, el ticket no existe"
+        
+    @staticmethod
+    def tickets_total_visitante():
+        query=(
+            Visitante.select()
+            .join(Ticket)
+            .group_by(Visitante.id)
+            .order_by()
+        )
+
+        
 
 
     

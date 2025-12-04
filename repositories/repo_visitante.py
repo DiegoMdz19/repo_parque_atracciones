@@ -54,3 +54,25 @@ class RepoVisitante:
 
         restricciones_actuales.save()
         print("Borrado con éxito")
+
+
+    # Falta por comprobar que tenga una estructura valida, fecha  y numero de atracciones
+    @staticmethod
+    def anyadir_visita(id_visitante, visita):
+        visitante = Visitante.get(Visitante.id == id_visitante)
+
+        if not visitante:
+            return f"Error, el visitante [{id_visitante}] no existe"
+        if not visita:
+            return f"Error, introduce una visita [{visita}] válida"
+        
+        historial = visitante.preferencias["historial_visitas"]
+
+        if visita not in historial:
+            historial.append(visita)
+            visitante.preferencias["historial_visitas"] = historial
+            visitante.save()
+        else:
+            return f"Error, la visita ya existe"
+        
+        return visitante
