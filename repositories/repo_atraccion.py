@@ -38,4 +38,6 @@ class RepoAtraccion:
         atrac.save()
         return atrac
     
-    
+    @staticmethod
+    def delete(id):
+        return Atraccion.delete().where(Atraccion.id == id)
