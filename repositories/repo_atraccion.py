@@ -33,7 +33,7 @@ class RepoAtraccion:
     
     @staticmethod
     def modificar_activa(id):
-        atrac = Atraccion.get(Atraccion.id == id)
+        atrac = RepoAtraccion.search_by_id(id)
         if not atrac:
             return
         if Atraccion.activa == True:
