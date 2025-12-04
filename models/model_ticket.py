@@ -19,6 +19,8 @@ class TicketModel(BaseModel):
             {"fecha": "2024-08-20", "atracciones_visitadas": 12}
         ]
     })
+    usado = BooleanField(default=False)
+    fecha_uso = DateTimeField(null = True)
 
     class Meta:
         table_name = 'tickets'
