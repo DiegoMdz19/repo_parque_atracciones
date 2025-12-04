@@ -23,6 +23,10 @@ class RepoVisitante:
         return list(Visitante.select())
     
     @staticmethod
+    def search_by_id(id):
+        return Visitante.get(Visitante.id ==  id)
+    
+    @staticmethod
     def delete(id):
         return Visitante.delete().where(Visitante.id == id)
     
