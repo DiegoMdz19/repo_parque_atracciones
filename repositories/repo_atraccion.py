@@ -65,9 +65,6 @@ class RepoAtraccion:
 
         return list(visit)
 
-
-
-
     @staticmethod
     def nueva_caracteristica_atraccion(id_atraccion, caracteristica):
         atraccion = Atraccion.get(Atraccion.id == id_atraccion)
