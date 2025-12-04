@@ -18,7 +18,7 @@ while True:
     match opcion:
         case "1":
             while True:
-                print("\n----USUARIOS----\n" \
+                print("\n----VISITANTES----\n" \
                     "\n1. Crear usuario\n" \
                     "\n2. Eliminar usuario\n" \
                     "\n3. Buscar usuario (ID)\n" \
@@ -62,7 +62,7 @@ while True:
                     case _:
                         print("Opción no válida")
         case "2":
-            print("\n----POSTS----\n" \
+            print("\n----ATRACCIONES----\n" \
                 "\n1.\n" \
                 "\n2.\n" \
                 "\n3.\n" \
@@ -73,7 +73,7 @@ while True:
                 "\n8.\n")
             pass
         case "3":
-            print("\n----LIKES----\n" \
+            print("\n----TICKETS----\n" \
                 "\n1.\n" \
                 "\n2.\n" \
                 "\n3.\n" \
