@@ -2,9 +2,13 @@ from pprint import pprint
 from models.model_visitante import Visitante
 from models.model_atraccion import Atraccion
 from models.model_ticket import Ticket
+from repositories.repo_visitante import RepoVisitante
+from repositories.repo_atraccion import RepoAtraccion
+from repositories.repo_ticket import RepoTicket
 from database import db, inicializar_base
 from ingesta import ingesta_datos
 import time
+from datetime import datetime
 
 #inicializar_base([Visitante,Atraccion,Ticket])
 #print("Base de datos inicializada correctamente, tablas reseteadas")
@@ -35,10 +39,81 @@ while True:
                 match opcion:
                     case "1":
                         print("\n----CREAR VISITANTE----\n")
+                        
+                        nombre = input("Nombre completo: ")
+                        email = input("Email: ")
+
+                        while True:
+                            try:
+                                altura = int(input("Altura (cm): "))
+                                break
+                            except ValueError:
+                                print("Altura no válida. Ingresa un número.")
+
+                        while True:
+                            try:
+                                fecha_registro = datetime.strptime(input("Fecha registro (YYYY-MM-DD HH:MM): "), "%Y-%m-%d %H:%M")
+                                break
+                            except ValueError:
+                                print("Formato de fecha incorrecto. Usa 'YYYY-MM-DD HH:MM'.")
+
+                        tipo_favorito = input("Tipo favorito (extrema/familiar/infantil/acuatica): ")
+                        restricciones_input = input("Restricciones (separa por comas si hay varias, o deja vacio): ")
+                        if restricciones_input.strip() == "":
+                            restricciones = []
+                        else:
+                            restricciones = [r.strip() for r in restricciones_input.split(",")]
+
+                        historial_visitas = []
+                        agregar_historial = input("¿Desea agregar historial de visitas? (s/n): ").lower()
+                        while agregar_historial == "s":
+                            fecha_visita_str = input("Fecha visita (YYYY-MM-DD): ")
+                            try:
+                                fecha_visita = datetime.strptime(fecha_visita_str, "%Y-%m-%d").strftime("%Y-%m-%d")
+                                atracciones_visitadas = int(input("Cantidad de atracciones visitadas: "))
+                                historial_visitas.append({
+                                    "fecha": fecha_visita,
+                                    "atracciones_visitadas": atracciones_visitadas
+                                })
+                            except ValueError:
+                                print("Datos incorrectos, intenta de nuevo.")
+                            agregar_historial = input("¿Agregar otra visita? (s/n): ").lower()
+
+                        preferencias = {
+                            "tipo_favorito": tipo_favorito,
+                            "restricciones": restricciones,
+                            "historial_visitas": historial_visitas
+                        }
+
+                        visitante = RepoVisitante.create(
+                            nombre=nombre,
+                            email=email,
+                            altura=altura,
+                            fecha_registro=fecha_registro,
+                            preferencias=preferencias
+                        )
+
+                        if visitante:
+                            print(f"Visitante '{visitante.nombre}' creado correctamente con ID {visitante.id}")
                     case "2":
                         print("\n----BUSCAR VISITANTE (ID)----\n")
+                        while True:
+                            id_input = input("Id de visitante a buscar: ")
+                            try:
+                                id = int(id_input)
+                                break
+                            except ValueError:
+                                print("El ID debe ser un número. Intenta de nuevo.")
+                        try:
+                            visitante = RepoVisitante.search_by_id(id)
+                            pprint(visitante.__dict__['__data__'])
+                        except Exception as e:
+                            print(f"No se encontró visitante con ID {id}")
                     case "3":
                         print("\n----OBTENER TODOS LOS VISITANTES----\n")
+                        for visitante in RepoVisitante.search_all():
+                            pprint(visitante.__dict__['__data__'])
+
                     case "4":
                         print("\n----ELIMINAR VISITANTE----\n")
                     case "5":

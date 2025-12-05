@@ -8,14 +8,14 @@ from models.model_ticket import Ticket
 class RepoVisitante:
 
     @staticmethod
-    def create(nombre,email,preferencias=None):
+    def create(nombre,email,altura,fecha_registro,preferencias=None):
         try:
             if preferencias:
-                return Visitante.create(nombre=nombre,email=email,preferencias=preferencias)
+                return Visitante.create(nombre=nombre,email=email,altura=altura,fecha_registro=fecha_registro,preferencias=preferencias)
             else:
-                return Visitante.create(nombre=nombre,email=email)
+                return Visitante.create(nombre=nombre,email=email,altura=altura,fecha_registro=fecha_registro)
         except Exception as e:
-            print(e)
+            print(f"Error al crear el visitante: {e}")
             return None
 
     @staticmethod
