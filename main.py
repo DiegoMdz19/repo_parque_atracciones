@@ -10,9 +10,9 @@ from ingesta import ingesta_datos
 import time
 from datetime import datetime
 
-#inicializar_base([Visitante,Atraccion,Ticket])
-#print("Base de datos inicializada correctamente, tablas reseteadas")
-#ingesta_datos()
+inicializar_base([Visitante,Atraccion,Ticket])
+print("Base de datos inicializada correctamente, tablas reseteadas")
+ingesta_datos()
 print("Iniciando menú Pichalandia...")
 time.sleep(1)
 while True:
@@ -98,9 +98,9 @@ while True:
                     case "2":
                         print("\n----BUSCAR VISITANTE (ID)----\n")
                         while True:
-                            id_input = input("Id de visitante a buscar: ")
+                            id_visitante = input("Id de visitante a buscar: ")
                             try:
-                                id = int(id_input)
+                                id = int(id_visitante)
                                 break
                             except ValueError:
                                 print("El ID debe ser un número. Intenta de nuevo.")
@@ -116,6 +116,9 @@ while True:
 
                     case "4":
                         print("\n----ELIMINAR VISITANTE----\n")
+                        id_visitante = int(input("ID del visitante a eliminar: "))
+                        RepoVisitante.delete_visitante(id_visitante)
+                        print(f"Visitante con id: {id_visitante} eliminado correctamente (tickets incluidos)")
                     case "5":
                         print("\n----OBTENER VISITANTES CON TICKET POR ATRACCIÓN (ID)----\n")
                     case "6":

@@ -27,8 +27,8 @@ class RepoVisitante:
         return Visitante.get(Visitante.id ==  id)
     
     @staticmethod
-    def delete(id):
-        return Visitante.delete().where(Visitante.id == id)
+    def delete_visitante(id):
+        return Visitante.delete().where(Visitante.id == id).execute()
     
     @staticmethod
     def visit_extremas():
