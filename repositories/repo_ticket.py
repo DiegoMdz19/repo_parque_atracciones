@@ -18,14 +18,16 @@ class RepoTicket:
         else:
             return "Error, el ticket no existe"
         
+    #Falta por poner desc
     @staticmethod
     def tickets_total_visitante():
-        query=(
-            Visitante.select()
+        query=  (
+            Visitante.select(Ticket.fn.COUNT(Ticket.visitante_id))
             .join(Ticket)
             .group_by(Visitante.id)
-            .order_by()
+            .order_by(Ticket.fn.COUNT(Ticket.visitante_id) )
         )
+        return list(query)
 
         
 
