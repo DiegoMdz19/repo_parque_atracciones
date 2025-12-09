@@ -10,7 +10,7 @@ class RepoTicket:
         ticket = Ticket.get(Ticket.id == id_ticket)
         if ticket:
             if precio_nuevo > 0:
-                ticket.detalles_compras["precio"] = precio_nuevo
+                ticket.detalles_compra["precio"] = precio_nuevo
                 ticket.save()
                 return ticket
             else:
