@@ -227,7 +227,7 @@ while True:
                 opcion = input("Selecciona una opción: ")
                 match opcion:
                     case "1":
-                        print("\n----CAMBIAR PRECIO A UN TICKET----\n") # PONER BONITO
+                        print("\n----CAMBIAR PRECIO A UN TICKET----\n") # PONER BONITO porfa
                         id = input("id ticket")
                         precio_nuevo = int(input("precio: "))
                         RepoTicket.cambiar_precio_ticket(id,precio_nuevo)
