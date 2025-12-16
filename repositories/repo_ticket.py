@@ -9,6 +9,17 @@ from models.model_atraccion import Atraccion
 class RepoTicket:
     
     @staticmethod
+    def create_ticket(visitante_id, fecha_visita, tipo_ticket, detalles_compra_json, atraccion_id):
+        try:
+            if detalles_compra_json:
+                return Ticket.create(visitante_id=visitante_id, fecha_visita = fecha_visita, tipo_ticket = tipo_ticket, detalles_compra_json = detalles_compra_json, atraccion_id = atraccion_id )
+            else:
+                return Ticket.create(visitante_id=visitante_id, fecha_visita = fecha_visita, tipo_ticket = tipo_ticket,atraccion_id = atraccion_id)
+        except Exception as e:
+            print(e)
+            
+            
+    @staticmethod
     def get_all():
         return list(Ticket.select())
 
