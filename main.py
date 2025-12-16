@@ -319,6 +319,12 @@ while True:
                 match opcion:
                     case "1":
                         print("\n----VISITANTES CON PREFERENCIA POR ATRACCIONES 'EXTREMAS'----\n")
+                        visitantes = RepoVisitante.visit_extremas()
+                        if not visitantes:
+                            print("No existen visitantes con preferencia de atracciones extremas") 
+                        else:
+                            for visitante in visitantes:
+                                print(visitante)
 
                     case "2":
                         print("\n----ATRACCIONES CON INTENSIDAD MAYOR A 7----\n")

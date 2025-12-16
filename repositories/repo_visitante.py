@@ -32,13 +32,7 @@ class RepoVisitante:
     
     @staticmethod
     def visit_extremas():
-        tipo = {"tipo_favorito": ["extrema"]}
-        
-        visit = (
-            Visitante.select()
-            .where(Visitante.preferencias.contains(tipo))
-        )
-
+        visit = Visitante.select().where(Visitante.preferencias["tipo_favorito"].contains('extrema'))
         return list(visit)
     
     @staticmethod
