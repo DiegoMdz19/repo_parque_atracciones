@@ -62,7 +62,6 @@ class RepoTicket:
             print("Error, el ticket no existe")
             return None
         
-    #Falta por poner desc
     @staticmethod
     def tickets_total_visitante():
         query = (
@@ -75,6 +74,7 @@ class RepoTicket:
         .order_by(fn.COUNT(Ticket.id).desc())
         )
         return list(query)
+        
 
     @staticmethod
     def top_5_atracciones_mas_vendidas():
@@ -92,15 +92,15 @@ class RepoTicket:
         
     @staticmethod
     def visitantes_mas_100_euros():
-        query = (
-            Visitante.select(
-                Visitante,
-                fn.SUM(Ticket.detalles_compra['precio']).alias('gasto_total')
-            )
-            .join(Ticket)
-            .group_by(Visitante.id)
-            .having(fn.SUM(Ticket.detalles_compra['precio']) > 100)
-        )
-        return list(query)
+        visitantes = []
+        for visitante in Visitante.select():
+            total = 0
+            for ticket in visitante.tickets:
+                precio = ticket.detalles_compra.get("precio",)
+                total += float(precio)
+            if total >= 100:
+                visitantes.append(visitante)
+        return visitantes
+
 
     

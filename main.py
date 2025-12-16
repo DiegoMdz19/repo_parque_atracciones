@@ -465,23 +465,30 @@ while True:
                         print("\n----LISTAR VISITANTES POR CANTIDAD DE TICKETS (DESCENDENTE)----\n")
                         visitantes = RepoTicket.tickets_total_visitante()
                         for visitante in visitantes:
-                            print(visitante)
+                            print(visitante, f"Total de tickets: {visitante.total_tickets}")
                     case "2":
                         print("\n----5 ATRACCIONES MÁS VENDIDAS----\n")
                         atracciones = RepoTicket.top_5_atracciones_mas_vendidas()
+                        i = 0
                         for atraccion in atracciones:
-                            print(atraccion)
+                            i += 1
+                            print(f"{i} . {atraccion.nombre}")
+                            
                     case "3":
                         print("\n----OBTENER VISITANTES CON MÁS DE 100€ DE GASTO EN TICKETS----\n")
                         visitantes = RepoTicket.visitantes_mas_100_euros()
                         for visitante in visitantes:
-                            print(visitante)
+                            total = sum(float(ticket.detalles_compra["precio"]) for ticket in visitante.tickets)
+                            print(f" {visitante.nombre}(ID:{visitante.id})--> Gasto total: {total} €")
                     case "4":
                         print("\n----ATRACCIONES COMPATIBLES PARA UN VISITANTE----\n")
-                        id_visitante = input("Id del visitante: ")
+                        try:
+                            id_visitante = input("Id del visitante: ")
+                        except ValueError:
+                            print("El id debe ser un número")
                         atracciones = RepoAtraccion.atracciones_compatibles(id_visitante)
                         for atraccion in atracciones:
-                            print(atraccion)
+                            print(atraccion.nombre)
                     case "5":
                         print("Volviendo al menú principal...")
                         break
