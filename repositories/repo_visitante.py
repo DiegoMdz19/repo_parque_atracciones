@@ -45,9 +45,10 @@ class RepoVisitante:
     
     @staticmethod
     def eliminar_restriccion(id_visitante, restriccion):
-        visitante = Visitante.get(Visitante.id == id_visitante)
-        if not visitante:
-            print(f"Error, el visitante con id [{id_visitante}] no existe")
+        try:
+            visitante = Visitante.get(Visitante.id == id_visitante)
+        except Exception as e:
+            print(f"Error, el visitante con id [{id_visitante}] no existe: {e}")
             return None
         
         preferencias = visitante.preferencias
@@ -71,7 +72,6 @@ class RepoVisitante:
         
         print("Borrado con éxito")
 
-    # Falta por comprobar que tenga una estructura valida, fecha  y numero de atracciones
     @staticmethod
     def anyadir_visita(id_visitante, fecha, cantidad):
         visitante = Visitante.get(Visitante.id == id_visitante)
