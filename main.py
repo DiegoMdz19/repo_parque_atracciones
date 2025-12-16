@@ -272,7 +272,7 @@ while True:
                         break
                     case _:
                         print("Opción no válida")
-        #TICKETS
+        #TICKETS -- FALTA TEST
         case "3":
             while True:
                 print("\n----TICKETS----\n" \
