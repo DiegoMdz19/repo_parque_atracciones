@@ -65,15 +65,42 @@ class RepoTicket:
     #Falta por poner desc
     @staticmethod
     def tickets_total_visitante():
-        query=  (
-            Visitante.select(Ticket.fn.COUNT(Ticket.visitante_id))
-            .join(Ticket)
-            .group_by(Visitante.id)
-            .order_by(Ticket.fn.COUNT(Ticket.visitante_id) )
+        query = (
+        Visitante.select(
+            Visitante,
+            fn.COUNT(Ticket.id).alias('total_tickets')
+        )
+        .join(Ticket)  
+        .group_by(Visitante.id)
+        .order_by(fn.COUNT(Ticket.id).desc())
         )
         return list(query)
 
+    @staticmethod
+    def top_5_atracciones_mas_vendidas():
+        query = (
+            Atraccion.select(
+                Atraccion,
+                fn.COUNT(Ticket.id).alias('tickets_vendidos')                
+            )
+            .join(Ticket)
+            .group_by(Atraccion.id)
+            .order_by(fn.COUNT(Ticket.id).desc())
+            .limit(5)
+        )
+        return list(query)
         
-
+    @staticmethod
+    def visitantes_mas_100_euros():
+        query = (
+            Visitante.select(
+                Visitante,
+                fn.SUM(Ticket.detalles_compra['precio']).alias('gasto_total')
+            )
+            .join(Ticket)
+            .group_by(Visitante.id)
+            .having(fn.SUM(Ticket.detalles_compra['precio']) > 100)
+        )
+        return list(query)
 
     

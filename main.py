@@ -468,11 +468,20 @@ while True:
                             print(visitante)
                     case "2":
                         print("\n----5 ATRACCIONES MÁS VENDIDAS----\n")
-                        #atracciones = RepoAtraccion.AÑADIRMETODO
+                        atracciones = RepoTicket.top_5_atracciones_mas_vendidas()
+                        for atraccion in atracciones:
+                            print(atraccion)
                     case "3":
                         print("\n----OBTENER VISITANTES CON MÁS DE 100€ DE GASTO EN TICKETS----\n")
+                        visitantes = RepoTicket.visitantes_mas_100_euros()
+                        for visitante in visitantes:
+                            print(visitante)
                     case "4":
                         print("\n----ATRACCIONES COMPATIBLES PARA UN VISITANTE----\n")
+                        id_visitante = input("Id del visitante: ")
+                        atracciones = RepoAtraccion.atracciones_compatibles(id_visitante)
+                        for atraccion in atracciones:
+                            print(atraccion)
                     case "5":
                         print("Volviendo al menú principal...")
                         break

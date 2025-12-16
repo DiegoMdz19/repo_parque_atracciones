@@ -1,6 +1,7 @@
 from peewee import *
 from playhouse import postgres_ext
 from models.model_atraccion import Atraccion
+from models.model_visitante import Visitante
 
 class RepoAtraccion:
     @staticmethod
@@ -89,3 +90,29 @@ class RepoAtraccion:
         print("Caracteristica añadida correctamente")
         return atraccion
 
+    @staticmethod
+    def atracciones_compatibles(id_visitante):
+        try:
+            visitante = Visitante.get(Visitante.id == id_visitante)
+        except Exception as e:
+            print(f"Error: el visitante con id [{id_visitante}] no existe: {e}")
+            return None
+        
+        tipo_favorito = ""
+        if visitante.preferencias and 'tipo_favorito' in visitante.preferencias:
+            tipo_favorito = visitante.preferencias['tipo_favorito']
+
+        altura_visitante = visitante.altura
+
+        query = (
+            Atraccion.select()
+            .where(
+                (Atraccion.activa == True) &
+                (Atraccion.altura_minima <= altura_visitante)
+            )
+        )
+
+        if tipo_favorito:
+            query = query.where(Atraccion.tipo == tipo_favorito)
+        
+        return list(query)
