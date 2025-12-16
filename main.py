@@ -340,7 +340,8 @@ while True:
                         print("\n----ATRACCIONES CON DURACIÓN MAYOR A 120 SEGUNDOS----\n")
                         atracciones = RepoAtraccion.mayor_cientoveinte()
                         for atraccion in atracciones:
-                            print(atraccion)
+                            duracion = int(atraccion.detalles.get("duracion_segundos",))
+                            print(f"{atraccion.nombre}, Duracion: {duracion}")
                     case "5":
                         print("\n----VISITANTES CON PROBLEMAS CARDIACOS----\n")
                     case "6":

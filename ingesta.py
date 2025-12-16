@@ -138,7 +138,7 @@ def ingesta_datos():
             "tipo": "acuatica",
             "altura_minima": 130,
             "detalles": {
-                "duracion_segundos": 95,
+                "duracion_segundos": 140,
                 "capacidad_por_turno": 18,
                 "intensidad": 7,
                 "caracteristicas": ["tobogán", "salpicaduras"],
@@ -152,7 +152,7 @@ def ingesta_datos():
             "tipo": "acuatica",
             "altura_minima": 125,
             "detalles": {
-                "duracion_segundos": 75,
+                "duracion_segundos": 200,
                 "capacidad_por_turno": 22,
                 "intensidad": 5,
                 "caracteristicas": ["agua", "subidas"],
