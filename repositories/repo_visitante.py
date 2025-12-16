@@ -69,33 +69,40 @@ class RepoVisitante:
         
         return True
 
-    # Falta por comprobar que tenga una estructura valida, fecha  y numero de atracciones
     @staticmethod
-    def anyadir_visita(id_visitante, fecha, cantidad):
-        visitante = Visitante.get(Visitante.id == id_visitante)
-
-        if not visitante:
+    def anyadir_visita(id_visitante, fecha_string, cantidad):
+        try:
+            visitante = Visitante.get(Visitante.id == id_visitante)
+        except Visitante.DoesNotExist:
             print(f"Error, el visitante [{id_visitante}] no existe")
             return None
+
         if cantidad <= 0:
             print(f"Error, cantidad {cantidad} no válida")
             return None
-        if fecha > datetime.now():
-            print(f"Error, fecha introducida no válida")
+
+        try:
+            fecha_datetime = datetime.strptime(fecha_string, "%Y-%m-%d")
+        except ValueError:
+            print(f"Error, la fecha {fecha_string} no tiene un formato válido")
             return None
-        historial = visitante.preferencias["historial_visitas"]
 
-        if fecha not in historial:
-            historial.append(fecha)
-            visitante.preferencias["historial_visitas"] = historial
-            visitante.preferencias["attracciones_visitadas"] = cantidad
+        if fecha_datetime > datetime.now():
+            print(f"Error, fecha introducida no puede ser futura")
+            return None
 
-            visitante.save()
-        else:
+        historial = visitante.preferencias.get("historial_visitas", [])
+
+        if fecha_string in historial:
             print(f"Error, la visita ya existe")
             return None
-        
-        print("Visita añadida correctamente")
+
+        historial.append(fecha_string)
+        visitante.preferencias["historial_visitas"] = historial
+        visitante.preferencias["atracciones_visitadas"] = cantidad
+
+        visitante.save()
         return visitante
+
 
 

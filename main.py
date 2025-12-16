@@ -67,9 +67,9 @@ while True:
                         historial_visitas = []
                         agregar_historial = input("¿Desea agregar historial de visitas? (s/n): ").lower().strip()
                         while agregar_historial == "s":
-                            fecha_visita_str = input("Fecha visita (YYYY-MM-DD): ")
+                            fecha_visita_input = input("Fecha visita (YYYY-MM-DD): ")
                             try:
-                                fecha_visita = datetime.strptime(fecha_visita_str, "%Y-%m-%d").strftime("%Y-%m-%d")
+                                fecha_visita = datetime.strptime(fecha_visita_input, "%Y-%m-%d").strftime("%Y-%m-%d")
                                 atracciones_visitadas = int(input("Cantidad de atracciones visitadas: "))
                                 historial_visitas.append({
                                     "fecha": fecha_visita,
@@ -417,13 +417,34 @@ while True:
                         RepoAtraccion.nueva_caracteristica_atraccion(id_atraccion, caracteristica)
                         print(f"La característica ha sido añadida con éxito")
                     case "4":
-                        
                         print("\n----AÑADIR UNA NUEVA VISITAL AL HISTORIAL DE UN VISITANTE----\n")
-                        id = input("id: ")
-                        fecha_visita_str = input("Fecha visita (YYYY-MM-DD): ")
-                        fecha_visita = datetime.strptime(fecha_visita_str, "%Y-%m-%d").strftime("%Y-%m-%d")
-                        cantidad = int(input("numero de atracciones visitadas: "))
-                        RepoVisitante.anyadir_visita(id,fecha_visita, cantidad)
+                        while True:
+                            try:
+                                id_visitante = int(input("Id del visitante: "))
+                                visitante = Visitante.get(Visitante.id == id_visitante)
+                                break 
+                            except ValueError:
+                                print("El id debe ser numérico")
+                            except Atraccion.DoesNotExist:
+                                print(f"No se encuentra ningun visitante con el id {id_visitante}")
+                        while True:
+                            fecha_visita = input("Fecha visita (YYYY-MM-DD): ").strip()
+                            try:
+                                datetime.strptime(fecha_visita, "%Y-%m-%d")
+                                break
+                            except ValueError:
+                                print("Fecha no válida, recuerda el formato YYYY-MM-DD")
+                        while True:
+                            try:
+                                cantidad = int(input("Atracciones visitadas: "))
+                                break
+                            except ValueError:
+                                print("Debe ser un número")
+                        
+                        resultado = RepoVisitante.anyadir_visita(id_visitante, fecha_visita, cantidad)
+
+                        if resultado is not None:
+                            print(f"Visita añadida correctamente al historial del visitante {visitante.nombre}")
 
                     case "5":
                         print("Volviendo al menú principal...")
