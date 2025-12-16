@@ -56,9 +56,11 @@ class RepoTicket:
                 ticket.save()
                 return ticket
             else:
-                return "Error, el nuevo precio no es válido"
+                print("Error, el nuevo precio no es válido")
+                return None
         else:
-            return "Error, el ticket no existe"
+            print("Error, el ticket no existe")
+            return None
         
     #Falta por poner desc
     @staticmethod
