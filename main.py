@@ -401,13 +401,21 @@ while True:
                             print(f"La restricción '{restriccion}' no se encuentra en el visitante con id {id_visitante}")
                         else:
                             print(f"La restricción '{restriccion}' ha sido eliminada del visitante con id {id_visitante} correctamente")
-    
                     case "3":
-
                         print("\n----AÑADIR UNA NUEVA CARACTERISTICA A UNA ATRACCIÓN----\n")
-                        id = input("id: ")
-                        caracteristica = input("caracteristica: ")
-                        RepoAtraccion.nueva_caracteristica_atraccion(id,caracteristica)
+                        while True:
+                            try:
+                                id_atraccion = int(input("Id de la atracción: "))
+                                atraccion = Atraccion.get(Atraccion.id == id_atraccion)
+                                break 
+                            except ValueError:
+                                print("El id debe ser numérico")
+                            except Atraccion.DoesNotExist:
+                                print(f"No se encuentra ninguna atracción con el id {id_atraccion}")
+
+                        caracteristica = input("Característica a añadir: ").strip().lower()
+                        RepoAtraccion.nueva_caracteristica_atraccion(id_atraccion, caracteristica)
+                        print(f"La característica ha sido añadida con éxito")
                     case "4":
                         
                         print("\n----AÑADIR UNA NUEVA VISITAL AL HISTORIAL DE UN VISITANTE----\n")
