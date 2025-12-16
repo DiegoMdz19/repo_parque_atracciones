@@ -44,14 +44,18 @@ class RepoAtraccion:
 
     @staticmethod
     def mayor_cientoveinte():
-        return list(
-            Atraccion.select()
-            .where(Atraccion.detalles["duracion_segundos"] > "120")
-        )
+        atracciones = list(Atraccion.select())
+        resultado = []
+        for atraccion in atracciones:
+            duracion = atraccion.detalles.get("duracion_segundos",)
+            if duracion > 120:
+                resultado.append(atraccion)
+        return resultado
+        
 
 
     @staticmethod
-    def mayor_ocho():
+    def mayor_siete():
         return list(
             Atraccion.select()
             .where(Atraccion.detalles["intensidad"] > "7")

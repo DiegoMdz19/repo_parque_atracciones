@@ -319,12 +319,19 @@ while True:
                 match opcion:
                     case "1":
                         print("\n----VISITANTES CON PREFERENCIA POR ATRACCIONES 'EXTREMAS'----\n")
+
                     case "2":
                         print("\n----ATRACCIONES CON INTENSIDAD MAYOR A 7----\n")
+                        atracciones = RepoAtraccion.mayor_siete()
+                        for atraccion in atracciones:
+                            print(atraccion)
                     case "3":
                         print("\n----TICKETS TIPO 'COLEGIO' CON PRECIO MENOR A 30€----\n")
                     case "4":
                         print("\n----ATRACCIONES CON DURACIÓN MAYOR A 120 SEGUNDOS----\n")
+                        atracciones = RepoAtraccion.mayor_cientoveinte()
+                        for atraccion in atracciones:
+                            print(atraccion)
                     case "5":
                         print("\n----VISITANTES CON PROBLEMAS CARDIACOS----\n")
                     case "6":
