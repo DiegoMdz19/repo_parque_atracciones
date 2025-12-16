@@ -354,7 +354,7 @@ while True:
                         break
                     case _:
                         print("Opción no válida")
-        #JSONB
+        #JSONB falta testing
         case "5":
             while True:
                 print("\n----MODIFICACIONES EN JSONB----\n" \
@@ -445,7 +445,6 @@ while True:
 
                         if resultado is not None:
                             print(f"Visita añadida correctamente al historial del visitante {visitante.nombre}")
-
                     case "5":
                         print("Volviendo al menú principal...")
                         break
