@@ -226,6 +226,8 @@ while True:
                             print("El id debe ser numérico")
                     case "3":
                         print("\n----OBTENER TODAS LAS ATRACCIONES----\n")
+                        for atraccion in RepoAtraccion.search_all_atraccion():
+                            print(atraccion)
                     case "4":
                         print("\n----ATRACCIONES DISPONIBLES (ACTIVAS)----\n")
                     case "5":
