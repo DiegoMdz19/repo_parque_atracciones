@@ -333,6 +333,9 @@ while True:
                             print(atraccion)
                     case "3":
                         print("\n----TICKETS TIPO 'COLEGIO' CON PRECIO MENOR A 30€----\n")
+                        tickets = RepoTicket.tickets_colegio_menor_30()
+                        for ticket in tickets:
+                            print(ticket)
                     case "4":
                         print("\n----ATRACCIONES CON DURACIÓN MAYOR A 120 SEGUNDOS----\n")
                         atracciones = RepoAtraccion.mayor_cientoveinte()
