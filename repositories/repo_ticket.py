@@ -101,6 +101,17 @@ class RepoTicket:
             if total >= 100:
                 visitantes.append(visitante)
         return visitantes
+    
+    @staticmethod
+    def ticket_descuento_estudiante():
+        tickets = list(Ticket.select())
+        lista_tickets = []
+
+        for ticket in tickets:
+            descuentos = ticket.detalles_compra.get("descuentos_aplicados", [])
+            if "estudiante" in descuentos:
+                lista_tickets.append(ticket)
+        return lista_tickets
 
 
     

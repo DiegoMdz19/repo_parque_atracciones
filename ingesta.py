@@ -335,9 +335,13 @@ def ingesta_datos():
 
     descuentos = []
     for i in range(100):
-        if i < 50:
+        if i <= 25:
             descuentos.append(["promo_verano"])
-        else:
+        elif 25 < i <= 50:
+            descuentos.append(["estudiante"])
+        elif 50 < i <= 75:
+            descuentos.append(["jubilado"])
+        else: 
             descuentos.append([])
 
     servicios_extra = []

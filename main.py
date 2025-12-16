@@ -10,9 +10,9 @@ from ingesta import ingesta_datos
 import time
 from datetime import datetime
 
-#inicializar_base([Visitante,Atraccion,Ticket])
-#print("Base de datos inicializada correctamente, tablas reseteadas")
-#ingesta_datos()
+inicializar_base([Visitante,Atraccion,Ticket])
+print("Base de datos inicializada correctamente, tablas reseteadas")
+ingesta_datos()
 print("Iniciando menú Pichalandia...")
 time.sleep(1)
 while True:
@@ -354,6 +354,9 @@ while True:
                             print(atraccion.nombre)
                     case "7":
                         print("\n----TICKETS CON DESCUENTO 'ESTUDIANTE'----\n")
+                        tickets = RepoTicket.ticket_descuento_estudiante()
+                        for ticket in tickets:
+                            print(f"Ticket con ID: #{ticket.id}")
                     case "8":
                         print("\n----ATRACCIONES CON HORARIO PROGRAMADO----\n")
                     case "9":
