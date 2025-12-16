@@ -45,22 +45,20 @@ class RepoVisitante:
     
     @staticmethod
     def eliminar_restriccion(id_visitante, restriccion):
-        visitante = Visitante.get(Visitante.id == id_visitante)
-        if not visitante:
-            print(f"Error, el visitante con id [{id_visitante}] no existe")
+        try:
+            visitante = Visitante.get(Visitante.id == id_visitante)
+        except Visitante.DoesNotExist:
             return None
         
         preferencias = visitante.preferencias
 
         if "restricciones" not in preferencias:
-            print(f"Error, el visitante no tiene restricciones registradas")
-            return None         
+            return False         
         
         restricciones_lista = preferencias["restricciones"]
         
         if restriccion not in restricciones_lista:
-            print(f"Error, el visitante no tiene restricciones con ese nombre")
-            return None
+            return False
            
         restricciones_lista.remove(restriccion)
 
@@ -69,7 +67,7 @@ class RepoVisitante:
         visitante.preferencias = preferencias
         visitante.save()
         
-        print("Borrado con éxito")
+        return True
 
     # Falta por comprobar que tenga una estructura valida, fecha  y numero de atracciones
     @staticmethod

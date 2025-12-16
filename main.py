@@ -382,21 +382,26 @@ while True:
                         RepoTicket.cambiar_precio_ticket(id_ticket,precio_nuevo)
                         print(f"Precio del ticket #{id_ticket} se ha cambiado a {precio_nuevo} €")
                     case "2":
-                        print("\n----ELIMINAR UNA RESTRICCIÓN A UN VISITANTE----\n")
+                        print("\n----ELIMINAR UNA RESTRICCIÓN A UN VISITANTE----\n")                  
                         while True:
                             try:
                                 id_visitante = int(input("Id del visitante: "))
-                                break
+                                visitante = Visitante.get(Visitante.id == id_visitante)
+                                break 
                             except ValueError:
                                 print("El id debe ser numérico")
-                        restriccion = input("restriccion").strip().lower()
-                        resultado = RepoVisitante.eliminar_restriccion(id,restriccion)
-                        if resultado is None:
-                            print(f"No se encuentra ningun visitante con el id {id_visitante}")
-                        elif not resultado:
-                            print(f"La restriccion '{restriccion}' no se encuentra en el visitante con id {id_visitante}")
+                            except Visitante.DoesNotExist:
+                                print(f"No se encuentra ningún visitante con el id {id_visitante}")
+
+                        restriccion = input("Restricción a eliminar: ").strip().lower()
+
+                        resultado = RepoVisitante.eliminar_restriccion(id_visitante, restriccion)
+
+                        if resultado is False:
+                            print(f"La restricción '{restriccion}' no se encuentra en el visitante con id {id_visitante}")
                         else:
-                            print(f"La restriccion '{restriccion}' ha sido eliminada del visitante con id {id_visitante} correctamente")     
+                            print(f"La restricción '{restriccion}' ha sido eliminada del visitante con id {id_visitante} correctamente")
+    
                     case "3":
 
                         print("\n----AÑADIR UNA NUEVA CARACTERISTICA A UNA ATRACCIÓN----\n")
