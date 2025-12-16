@@ -14,11 +14,11 @@ class RepoTicket:
 
     @staticmethod
     def get_by_visitante(visitante_id):
-        return Ticket.select().where(Ticket.visitante == visitante_id)
+        return list(Ticket.select().where(Ticket.visitante == visitante_id))
 
     @staticmethod
     def get_by_atraccion(atraccion_id):
-        return Ticket.select().where(Ticket.atraccion == atraccion_id)
+        return list(Ticket.select().where(Ticket.atraccion == atraccion_id))
 
     @staticmethod
     def marcar_usado(ticket_id):
