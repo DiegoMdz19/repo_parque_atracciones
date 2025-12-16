@@ -366,15 +366,37 @@ while True:
                 opcion = input("Selecciona una opción: ")
                 match opcion:
                     case "1":
-                        print("\n----CAMBIAR PRECIO A UN TICKET----\n") # PONER BONITO porfa
-                        id = input("id ticket")
-                        precio_nuevo = int(input("precio: "))
-                        RepoTicket.cambiar_precio_ticket(id,precio_nuevo)
+                        print("\n----CAMBIAR PRECIO A UN TICKET----\n")
+                        while True:
+                            try:
+                                id_ticket = int(input("Id del ticket a cambiar precio: "))
+                                break
+                            except ValueError:
+                                print("El id debe ser numérico")
+                        while True:
+                            try:
+                                precio_nuevo = float(input("Nuevo precio: "))
+                                break
+                            except ValueError:
+                                print("El precio debe ser un número (se aceptan decimales)")
+                        RepoTicket.cambiar_precio_ticket(id_ticket,precio_nuevo)
+                        print(f"Precio del ticket #{id_ticket} se ha cambiado a {precio_nuevo} €")
                     case "2":
-                        print("\n----ELIMINAR UNA RESTRICCIÓN A UN VISITANTE----\n") # COORREGIR NO FUNCIONA 
-                        id = input("id")
-                        restriccion = input("restriccion")
-                        RepoVisitante.eliminar_restriccion(id,restriccion)
+                        print("\n----ELIMINAR UNA RESTRICCIÓN A UN VISITANTE----\n")
+                        while True:
+                            try:
+                                id_visitante = int(input("Id del visitante: "))
+                                break
+                            except ValueError:
+                                print("El id debe ser numérico")
+                        restriccion = input("restriccion").strip().lower()
+                        resultado = RepoVisitante.eliminar_restriccion(id,restriccion)
+                        if resultado is None:
+                            print(f"No se encuentra ningun visitante con el id {id_visitante}")
+                        elif not resultado:
+                            print(f"La restriccion '{restriccion}' no se encuentra en el visitante con id {id_visitante}")
+                        else:
+                            print(f"La restriccion '{restriccion}' ha sido eliminada del visitante con id {id_visitante} correctamente")     
                     case "3":
                         print("\n----AÑADIR UNA NUEVA CARACTERISTICA A UNA ATRACCIÓN----\n")
                     case "4":
@@ -388,7 +410,7 @@ while True:
         case "6":
             while True:
                 print("\n----CONSULTAS ÚTILES----\n" \
-                    "\n1. Listar visitantes ordenados por cantidad total de tickets comprados (Descendiente)\n" \
+                    "\n1. Listar visitantes ordenados por cantidad total de tickets comprados (Descendente)\n" \
                     "\n2. 5 Atracciones más vendidas\n"
                     "\n3. Obtener visitantes con más de 100€ de gasto en tickets\n" \
                     "\n4. Atracciones compatibles para un visitante\n" \
@@ -396,9 +418,13 @@ while True:
                 opcion = input("Selecciona una opción: ")
                 match opcion:
                     case "1":
-                        print("\n----LISTAR VISITANTES POR CANTIDAD DE TICKETS (DESCENDIENTE)----\n")
+                        print("\n----LISTAR VISITANTES POR CANTIDAD DE TICKETS (DESCENDENTE)----\n")
+                        visitantes = RepoTicket.tickets_total_visitante()
+                        for visitante in visitantes:
+                            print(visitante)
                     case "2":
                         print("\n----5 ATRACCIONES MÁS VENDIDAS----\n")
+                        #atracciones = RepoAtraccion.AÑADIRMETODO
                     case "3":
                         print("\n----OBTENER VISITANTES CON MÁS DE 100€ DE GASTO EN TICKETS----\n")
                     case "4":
