@@ -103,6 +103,17 @@ class RepoVisitante:
 
         visitante.save()
         return visitante
+    
+
+    @staticmethod
+    def problemas_cardiacos():
+        visitantes = list(Visitante.select())
+        lista_visitantes = []
+        for visitante in visitantes:
+            restricciones = visitante.preferencias.get("restricciones", [])
+            if "problemas_cardiacos" in restricciones:
+                lista_visitantes.append(visitante)
+        return lista_visitantes
 
 
 

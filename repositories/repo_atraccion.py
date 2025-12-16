@@ -116,3 +116,16 @@ class RepoAtraccion:
             query = query.where(Atraccion.tipo == tipo_favorito)
         
         return list(query)
+    
+    @staticmethod
+    def looping_y_caida():
+        atracciones = list(Atraccion.select())
+        resultado = []
+
+        for atraccion in atracciones:
+            caracteristicas = atraccion.detalles.get("caracteristicas", [])
+            if "looping" in caracteristicas and "caida_libre" in caracteristicas:
+                resultado.append(atraccion)
+
+        return resultado
+
