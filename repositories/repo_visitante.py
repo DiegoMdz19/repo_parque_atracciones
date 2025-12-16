@@ -3,6 +3,7 @@ from playhouse import postgres_ext
 from models.model_visitante import Visitante
 from models.model_atraccion import Atraccion
 from models.model_ticket import Ticket
+from datetime import datetime
 
 
 class RepoVisitante:
@@ -42,42 +43,61 @@ class RepoVisitante:
 
 
     
-    #Corregir
     @staticmethod
     def eliminar_restriccion(id_visitante, restriccion):
         visitante = Visitante.get(Visitante.id == id_visitante)
         if not visitante:
-            return f"Error, el visitante con id [{id_visitante}] no existe"
+            print(f"Error, el visitante con id [{id_visitante}] no existe")
+            return None
         
-        restricciones_actuales = visitante.preferencias
-        if not restricciones_actuales:
-            return f"Error, la restriccion [{restriccion}] no existe"
+        preferencias = visitante.preferencias
+
+        if "restricciones" not in preferencias:
+            print(f"Error, el visitante no tiene restricciones registradas")
+            return None         
         
-        del restricciones_actuales["restricciones"][restriccion]
+        restricciones_lista = preferencias["restricciones"]
+        
+        if restriccion not in restricciones_lista:
+            print(f"Error, el visitante no tiene restricciones con ese nombre")
+            return None
+           
+        restricciones_lista.remove(restriccion)
 
-        restricciones_actuales.save()
-        print("Borrado con éxito")
+        preferencias["restricciones"] = restricciones_lista
 
+        visitante.preferencias = preferencias
+        visitante.save()
+        
+        print("Borrado con éxito")
 
     # Falta por comprobar que tenga una estructura valida, fecha  y numero de atracciones
     @staticmethod
-    def anyadir_visita(id_visitante, visita):
+    def anyadir_visita(id_visitante, fecha, cantidad):
         visitante = Visitante.get(Visitante.id == id_visitante)
 
         if not visitante:
-            return f"Error, el visitante [{id_visitante}] no existe"
-        if not visita:
-            return f"Error, introduce una visita [{visita}] válida"
-        
+            print(f"Error, el visitante [{id_visitante}] no existe")
+            return None
+        if cantidad <= 0:
+            print(f"Error, cantidad {cantidad} no válida")
+            return None
+        if fecha > datetime.now():
+            print(f"Error, fecha introducida no válida")
+            return None
         historial = visitante.preferencias["historial_visitas"]
 
-        if visita not in historial:
-            historial.append(visita)
+        if fecha not in historial:
+            historial.append(fecha)
             visitante.preferencias["historial_visitas"] = historial
+            visitante.preferencias["attracciones_visitadas"] = cantidad
+
             visitante.save()
         else:
-            return f"Error, la visita ya existe"
+            print(f"Error, la visita ya existe")
+            return None
         
+        print("Visita añadida correctamente")
         return visitante
 
 

@@ -62,14 +62,19 @@ class RepoAtraccion:
         )
 
 
+
+
+    #corregido ya
     @staticmethod
     def nueva_caracteristica_atraccion(id_atraccion, caracteristica):
         atraccion = Atraccion.get(Atraccion.id == id_atraccion)
 
         if not atraccion:
-            return f"Error, la atracción [{id_atraccion}] no existe"
+            print(f"Error, la atracción [{id_atraccion}] no existe")
+            return None
         if not caracteristica:
-            return f"Error, introduce una caracteristica [{caracteristica}] válida"
+            print(f"Error, introduce una caracteristica [{caracteristica}] válida")
+            return None
         
         caracteristicas = atraccion.detalles["caracteristicas"]
 
@@ -77,9 +82,10 @@ class RepoAtraccion:
             caracteristicas.append(caracteristica)
             atraccion.detalles["caracteristicas"] = caracteristicas
             atraccion.save()
-
         else:
-            return f"Error, la caracteristica ya existe"
+            print(f"Error, la caracteristica ya existe")
+            return None
         
+        print("Caracteristica añadida correctamente")
         return atraccion
 

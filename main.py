@@ -398,9 +398,20 @@ while True:
                         else:
                             print(f"La restriccion '{restriccion}' ha sido eliminada del visitante con id {id_visitante} correctamente")     
                     case "3":
+
                         print("\n----AÑADIR UNA NUEVA CARACTERISTICA A UNA ATRACCIÓN----\n")
+                        id = input("id: ")
+                        caracteristica = input("caracteristica: ")
+                        RepoAtraccion.nueva_caracteristica_atraccion(id,caracteristica)
                     case "4":
+                        
                         print("\n----AÑADIR UNA NUEVA VISITAL AL HISTORIAL DE UN VISITANTE----\n")
+                        id = input("id: ")
+                        fecha_visita_str = input("Fecha visita (YYYY-MM-DD): ")
+                        fecha_visita = datetime.strptime(fecha_visita_str, "%Y-%m-%d").strftime("%Y-%m-%d")
+                        cantidad = int(input("numero de atracciones visitadas: "))
+                        RepoVisitante.anyadir_visita(id,fecha_visita, cantidad)
+
                     case "5":
                         print("Volviendo al menú principal...")
                         break
