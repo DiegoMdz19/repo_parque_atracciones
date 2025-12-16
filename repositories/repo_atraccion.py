@@ -22,12 +22,15 @@ class RepoAtraccion:
         return list(Atraccion.select().where(Atraccion.activa == True))
 
     @staticmethod
-    def search_by_id(id):
-        return Atraccion.get(Atraccion.id == id)
+    def search_by_id_atraccion(id):
+        try:
+            return Atraccion.get(Atraccion.id == id)
+        except DoesNotExist:
+            return None
 
     @staticmethod
     def modificar_activa(id):
-        atrac = RepoAtraccion.search_by_id(id)
+        atrac = RepoAtraccion.search_by_id_atraccion(id)
         if not atrac:
             return None
 
@@ -36,7 +39,7 @@ class RepoAtraccion:
         return atrac
 
     @staticmethod
-    def delete(id):
+    def delete_atraccion(id):
         return Atraccion.delete().where(Atraccion.id == id).execute()
 
     @staticmethod

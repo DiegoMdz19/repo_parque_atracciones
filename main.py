@@ -26,7 +26,7 @@ while True:
         "\n7. Salir\n")
     opcion = input("Selecciona una opción: ")
     match opcion:
-        #VISITANTES -- FUNCIONA BIEN TODO
+        #VISITANTES -- FUNCIONA BIEN TODO - FALTA TEST
         case "1":
             while True:
                 print("\n----VISITANTES----\n" \
@@ -50,15 +50,14 @@ while True:
                                 break
                             except ValueError:
                                 print("Altura no válida. Ingresa un número.")
-
+                        fecha_registro = datetime.now()
                         while True:
-                            try:
-                                fecha_registro = datetime.strptime(input("Fecha registro (YYYY-MM-DD HH:MM): "), "%Y-%m-%d %H:%M")
+                            tipo_favorito = input("Tipo favorito (extrema/familiar/infantil/acuatica): ")
+                            if tipo_favorito in ['extrema','familiar','infantil','acuatica']:
                                 break
-                            except ValueError:
-                                print("Formato de fecha incorrecto. Usa 'YYYY-MM-DD HH:MM'.")
+                            else:
+                                print("Tipo no válido. Prueba otra vez")
 
-                        tipo_favorito = input("Tipo favorito (extrema/familiar/infantil/acuatica): ")
                         restricciones_input = input("Restricciones (separa por comas si hay varias, o deja vacio): ")
                         if restricciones_input.strip() == "":
                             restricciones = []
@@ -116,9 +115,18 @@ while True:
                             print(visitante)
                     case "4":
                         print("\n----ELIMINAR VISITANTE----\n")
-                        id_visitante = int(input("ID del visitante a eliminar: "))
-                        RepoVisitante.delete_visitante(id_visitante)
-                        print(f"Visitante con id: {id_visitante} eliminado correctamente (tickets incluidos)")
+                        while True:
+                            try:
+                                id_visitante = int(input("ID del visitante a eliminar: "))
+                                break
+                            except ValueError:
+                                print("El ID debe ser numérico. Intenta de nuevo.")
+
+                        filas = RepoVisitante.delete_visitante(id_visitante)
+                        if filas != 0:
+                            print(f"Visitante con id {id_visitante} eliminado correctamente (tickets incluidos)")
+                        else:
+                            print(f"No existe ningún visitante con id {id_visitante}")
                     case "5":
                         print("\n----OBTENER VISITANTES CON TICKET POR ATRACCIÓN (ID)----\n")
                         id_atraccion = int(input("ID de la atracción: "))
@@ -130,7 +138,7 @@ while True:
                         break
                     case _:
                         print("Opción no válida")
-        #ATRACCIONES
+        #ATRACCIONES -- FUNCIONA TODO BIEN- FALTA TEST
         case "2":
             while True:
                 print("\n----ATRACCIONES----\n" \
@@ -215,15 +223,18 @@ while True:
                             print(f"Error al crear la atracción  : {e}")
                     case "2":
                         print("\n----BUSCAR ATRACCIÓN (ID)----\n")
-                        try:
-                            atraccion_id = int(input("Id de la atracción: "))
-                            atraccion = RepoAtraccion.search_by_id_atraccion(atraccion_id)
-                            if atraccion is None:
-                                print(f"No existe una atracción con el id: {atraccion_id}")
-                            else:
-                                print(atraccion)
-                        except Exception as e:
-                            print("El id debe ser numérico")
+                        while True:
+                            try:
+                                atraccion_id = int(input("Id de la atracción: "))
+                                break
+                            except Exception as e:
+                                print("El id debe ser numérico")
+                        
+                        atraccion = RepoAtraccion.search_by_id_atraccion(atraccion_id)
+                        if atraccion is None:
+                            print(f"No existe una atracción con el id: {atraccion_id}")
+                        else:
+                            print(atraccion)
                     case "3":
                         print("\n----OBTENER TODAS LAS ATRACCIONES----\n")
                         for atraccion in RepoAtraccion.search_all_atraccion():
@@ -235,16 +246,26 @@ while True:
                     case "5":
                         print("\n----ELIMINAR UNA ATRACCIÓN (ID)----\n")
                         id_atraccion = int(input("ID de la atracción a eliminar: "))
-                        RepoAtraccion.delete(id_atraccion)
+                        RepoAtraccion.delete_atraccion(id_atraccion)
                         print(f"Atracción con id: {id_atraccion} eliminada correctamente.")
                     case "6":
                         print("\n----CAMBIAR ESTADO DE UNA ATRACCIÓN (ACTIVO/INACTIVO)----\n")
                         while True:
                             try:
                                 id_atraccion = int(input("Id de atracción a cambiar estado: "))
-                                RepoAtraccion.modificar_activa(id_atraccion)
+                                break
                             except ValueError:
                                 print("El ID debe ser un número. Intenta de nuevo.")
+                        atraccion = RepoAtraccion.modificar_activa(id_atraccion)
+                        if atraccion is None:
+                            print(f"No existe ninguna atracción con el id : {id_atraccion}")
+                        else:
+                            estado = ""
+                            if atraccion.activa:
+                                estado = "Activa"
+                            else:
+                                estado = "Inactiva"
+                            print(f"El estado de la atracción '{atraccion.nombre}' ha sido cambiado a : {estado}")
 
                     case "7":
                         print("Volviendo al menú principal...")
