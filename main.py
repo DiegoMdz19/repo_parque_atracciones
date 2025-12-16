@@ -366,21 +366,25 @@ while True:
                 opcion = input("Selecciona una opción: ")
                 match opcion:
                     case "1":
+
                         print("\n----CAMBIAR PRECIO A UN TICKET----\n") # PONER BONITO porfa
                         id = input("id ticket")
                         precio_nuevo = int(input("precio: "))
                         RepoTicket.cambiar_precio_ticket(id,precio_nuevo)
                     case "2":
+
                         print("\n----ELIMINAR UNA RESTRICCIÓN A UN VISITANTE----\n") # COORREGIR NO FUNCIONA 
                         id = input("id")
                         restriccion = input("restriccion")
                         RepoVisitante.eliminar_restriccion(id,restriccion)
                     case "3":
+
                         print("\n----AÑADIR UNA NUEVA CARACTERISTICA A UNA ATRACCIÓN----\n")
                         id = input("id: ")
                         caracteristica = input("caracteristica: ")
                         RepoAtraccion.nueva_caracteristica_atraccion(id,caracteristica)
                     case "4":
+                        
                         print("\n----AÑADIR UNA NUEVA VISITAL AL HISTORIAL DE UN VISITANTE----\n")
                         id = input("id: ")
                         fecha_visita_str = input("Fecha visita (YYYY-MM-DD): ")
