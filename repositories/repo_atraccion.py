@@ -120,12 +120,26 @@ class RepoAtraccion:
     @staticmethod
     def looping_y_caida():
         atracciones = list(Atraccion.select())
-        resultado = []
+        lista_atracciones = []
 
         for atraccion in atracciones:
             caracteristicas = atraccion.detalles.get("caracteristicas", [])
             if "looping" in caracteristicas and "caida_libre" in caracteristicas:
-                resultado.append(atraccion)
+                lista_atracciones.append(atraccion)
 
-        return resultado
+        return lista_atracciones
+    
+    @staticmethod
+    def atracciones_con_horario():
+        atracciones = list(Atraccion.select())
+        lista_atracciones = []
+
+        for atraccion in atracciones:
+            horarios = atraccion.detalles.get("horarios", {})
+            if "mantenimiento" in horarios:
+                lista_atracciones.append(atraccion)
+
+        return lista_atracciones
+
+
 

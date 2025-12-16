@@ -329,36 +329,62 @@ while True:
                     case "2":
                         print("\n----ATRACCIONES CON INTENSIDAD MAYOR A 7----\n")
                         atracciones = RepoAtraccion.mayor_siete()
-                        for atraccion in atracciones:
-                            print(atraccion)
+                        if not atracciones:
+                            print("No hay atracciones con intensidad mayor a 7")
+                        else:
+                            for atraccion in atracciones:
+                                print(atraccion)
                     case "3":
                         print("\n----TICKETS TIPO 'COLEGIO' CON PRECIO MENOR A 30€----\n")
                         tickets = RepoTicket.tickets_colegio_menor_30()
-                        for ticket in tickets:
-                            print(ticket)
+                        if not tickets:
+                            print("No hay tickets tipo colegio con un precio menor a 30 euros")
+                        else:
+                            for ticket in tickets:
+                                print(ticket)
                     case "4":
                         print("\n----ATRACCIONES CON DURACIÓN MAYOR A 120 SEGUNDOS----\n")
                         atracciones = RepoAtraccion.mayor_cientoveinte()
-                        for atraccion in atracciones:
-                            duracion = int(atraccion.detalles.get("duracion_segundos",))
-                            print(f"{atraccion.nombre}, Duracion: {duracion}")
+                        if not atracciones:
+                            print("No hay atracciones con más de 120 segundos de duración")
+                        else:
+                            for atraccion in atracciones:
+                                duracion = int(atraccion.detalles.get("duracion_segundos",))
+                                print(f"{atraccion.nombre}, Duracion: {duracion}")
                     case "5":
                         print("\n----VISITANTES CON PROBLEMAS CARDIACOS----\n")
                         visitantes = RepoVisitante.problemas_cardiacos()
-                        for visitante in visitantes:
-                            print(f"{visitante.nombre} ID: {visitante.id}")
+                        if not visitantes:
+                            print("No hay visitantes con problemas_cardiacos")
+                        else:
+                            for visitante in visitantes:
+                                print(f"{visitante.nombre} ID: {visitante.id}")
                     case "6":
                         print("\n----ATRACCIONES CON LOOPING Y CAIDA LIBRE----\n")
                         atracciones = RepoAtraccion.looping_y_caida()
-                        for atraccion in atracciones:
-                            print(atraccion.nombre)
+                        if not atracciones:
+                            print("No hay atracciones con looping y caida libre a la vez")
+                        else:
+                            for atraccion in atracciones:
+                                print(atraccion.nombre)
                     case "7":
                         print("\n----TICKETS CON DESCUENTO 'ESTUDIANTE'----\n")
                         tickets = RepoTicket.ticket_descuento_estudiante()
-                        for ticket in tickets:
-                            print(f"Ticket con ID: #{ticket.id}")
+                        if not tickets:
+                            print("No hay tickets con descuento estudiante")
+                        else:
+                            for ticket in tickets:
+                                print(f"Ticket con ID: #{ticket.id}")
                     case "8":
                         print("\n----ATRACCIONES CON HORARIO PROGRAMADO----\n")
+                        atracciones = RepoAtraccion.atracciones_con_horario()
+                        if not atracciones:
+                            print("No hay atracciones con mantinimiento programado")
+                        else:
+                            for atraccion in atracciones:
+                                mantenimiento = atraccion.detalles.get("horarios", {}).get("mantenimiento", [])
+                                if mantenimiento:
+                                    print(f"{atraccion.nombre} - Horarios mantinimento: {mantenimiento}")
                     case "9":
                         print("Volviendo al menú principal...")
                         break
