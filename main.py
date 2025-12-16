@@ -10,9 +10,9 @@ from ingesta import ingesta_datos
 import time
 from datetime import datetime
 
-inicializar_base([Visitante,Atraccion,Ticket])
-print("Base de datos inicializada correctamente, tablas reseteadas")
-ingesta_datos()
+#inicializar_base([Visitante,Atraccion,Ticket])
+#print("Base de datos inicializada correctamente, tablas reseteadas")
+#ingesta_datos()
 print("Iniciando menú Pichalandia...")
 time.sleep(1)
 while True:
@@ -65,7 +65,7 @@ while True:
                             restricciones = [r.strip() for r in restricciones_input.split(",")]
 
                         historial_visitas = []
-                        agregar_historial = input("¿Desea agregar historial de visitas? (s/n): ").lower()
+                        agregar_historial = input("¿Desea agregar historial de visitas? (s/n): ").lower().strip()
                         while agregar_historial == "s":
                             fecha_visita_str = input("Fecha visita (YYYY-MM-DD): ")
                             try:
@@ -77,7 +77,7 @@ while True:
                                 })
                             except ValueError:
                                 print("Datos incorrectos, intenta de nuevo.")
-                            agregar_historial = input("¿Agregar otra visita? (s/n): ").lower()
+                            agregar_historial = input("¿Agregar otra visita? (s/n): ").lower().strip()
 
                         preferencias = {
                             "tipo_favorito": tipo_favorito,
@@ -106,13 +106,13 @@ while True:
                                 print("El ID debe ser un número. Intenta de nuevo.")
                         try:
                             visitante = RepoVisitante.search_by_id(id)
-                            pprint(visitante.__dict__['__data__'])
+                            print(visitante)
                         except Exception as e:
                             print(f"No se encontró visitante con ID {id}")
                     case "3":
                         print("\n----OBTENER TODOS LOS VISITANTES----\n")
                         for visitante in RepoVisitante.search_all():
-                            pprint(visitante.__dict__['__data__'])
+                            print(visitante)
 
                     case "4":
                         print("\n----ELIMINAR VISITANTE----\n")
@@ -121,6 +121,10 @@ while True:
                         print(f"Visitante con id: {id_visitante} eliminado correctamente (tickets incluidos)")
                     case "5":
                         print("\n----OBTENER VISITANTES CON TICKET POR ATRACCIÓN (ID)----\n")
+                        id_atraccion = int(input("ID de la atracción: "))
+                        visitantes = RepoVisitante.visit_tickets(id_atraccion)
+                        for visitante in visitantes:
+                            print(visitante)
                     case "6":
                         print("Volviendo al menú principal...")
                         break

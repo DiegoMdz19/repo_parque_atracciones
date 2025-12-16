@@ -22,3 +22,5 @@ class Ticket(BaseModel):
 
     class Meta:
         table_name = 'tickets'
+
+    

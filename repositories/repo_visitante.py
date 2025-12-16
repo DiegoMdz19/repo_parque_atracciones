@@ -32,18 +32,21 @@ class RepoVisitante:
     
     @staticmethod
     def visit_extremas():
-        json_struct = {"tipo_favorito": ["extrema"]}
+        tipo = {"tipo_favorito": ["extrema"]}
         
         visit = (
             Visitante.select()
-            .where(Visitante.preferencias.contains(json_struct))
+            .where(Visitante.preferencias.contains(tipo))
         )
 
         return list(visit)
     
     @staticmethod
-    def visit_tickets():
-        return list(Visitante.select().where(Ticket.visiante_id == Visitante.id))
+    def visit_tickets(id_atraccion):
+        return (Visitante.select().join(Ticket).where(Ticket.atraccion_id == id_atraccion).distinct())
+        
+
+
     
     #Corregir
     @staticmethod
@@ -82,3 +85,5 @@ class RepoVisitante:
             return f"Error, la visita ya existe"
         
         return visitante
+
+

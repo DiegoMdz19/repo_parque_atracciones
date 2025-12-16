@@ -2,6 +2,7 @@ from models.base_model import BaseModel
 from peewee import *
 from playhouse import postgres_ext
 from datetime import datetime
+import json
 
 class Visitante(BaseModel):
     nombre = TextField()
@@ -19,3 +20,12 @@ class Visitante(BaseModel):
 
     class Meta:
         table_name = 'visitantes'
+
+
+    def __str__(self):
+        return (f"\nVISITANTE #{self.id}\n"
+        f"Nombre: {self.nombre}\n"
+        f"Email: {self.email}\n"
+        f"Altura: {self.altura} cm\n"
+        f"Fecha registro: {self.fecha_registro}\n"
+        f"Preferencias:\n{json.dumps(self.preferencias, indent = 4)}\n")
