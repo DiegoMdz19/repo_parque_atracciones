@@ -130,7 +130,7 @@ def ingesta_datos():
                 "caracteristicas": ["agua", "rápidos"],
                 "horarios": {"apertura": "10:00", "cierre": "21:00", "mantenimiento": ["14:00-14:30"]},
             },
-            "activa": True,
+            "activa": False,
             "fecha_inauguracion": datetime(2019, 6, 30)
         },
         {
@@ -158,7 +158,7 @@ def ingesta_datos():
                 "caracteristicas": ["agua", "subidas"],
                 "horarios": {"apertura": "10:00", "cierre": "21:00", "mantenimiento": ["14:00-14:30"]},
             },
-            "activa": True,
+            "activa": False,
             "fecha_inauguracion": datetime(2020, 12, 15)
         }
     ]

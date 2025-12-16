@@ -230,10 +230,22 @@ while True:
                             print(atraccion)
                     case "4":
                         print("\n----ATRACCIONES DISPONIBLES (ACTIVAS)----\n")
+                        for atraccion in RepoAtraccion.search_disp():
+                            print(atraccion)
                     case "5":
                         print("\n----ELIMINAR UNA ATRACCIÓN (ID)----\n")
+                        id_atraccion = int(input("ID de la atracción a eliminar: "))
+                        RepoAtraccion.delete(id_atraccion)
+                        print(f"Atracción con id: {id_atraccion} eliminada correctamente.")
                     case "6":
                         print("\n----CAMBIAR ESTADO DE UNA ATRACCIÓN (ACTIVO/INACTIVO)----\n")
+                        while True:
+                            try:
+                                id_atraccion = int(input("Id de atracción a cambiar estado: "))
+                                RepoAtraccion.modificar_activa(id_atraccion)
+                            except ValueError:
+                                print("El ID debe ser un número. Intenta de nuevo.")
+
                     case "7":
                         print("Volviendo al menú principal...")
                         break

@@ -47,7 +47,7 @@ class RepoAtraccion:
 
     @staticmethod
     def delete(id):
-        return Atraccion.delete().where(Atraccion.id == id)
+        return Atraccion.delete().where(Atraccion.id == id).execute()
 
     @staticmethod
     def mayor_cientoveinte():
