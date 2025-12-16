@@ -344,8 +344,14 @@ while True:
                             print(f"{atraccion.nombre}, Duracion: {duracion}")
                     case "5":
                         print("\n----VISITANTES CON PROBLEMAS CARDIACOS----\n")
+                        visitantes = RepoVisitante.problemas_cardiacos()
+                        for visitante in visitantes:
+                            print(f"{visitante.nombre} ID: {visitante.id}")
                     case "6":
                         print("\n----ATRACCIONES CON LOOPING Y CAIDA LIBRE----\n")
+                        atracciones = RepoAtraccion.looping_y_caida()
+                        for atraccion in atracciones:
+                            print(atraccion.nombre)
                     case "7":
                         print("\n----TICKETS CON DESCUENTO 'ESTUDIANTE'----\n")
                     case "8":
