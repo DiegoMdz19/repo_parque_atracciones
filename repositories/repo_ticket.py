@@ -12,24 +12,45 @@ class RepoTicket:
     def create_ticket(visitante_id, fecha_visita, tipo_ticket, detalles_compra_json, atraccion_id):
         try:
             if detalles_compra_json:
-                return Ticket.create(visitante_id=visitante_id, fecha_visita = fecha_visita, tipo_ticket = tipo_ticket, detalles_compra_json = detalles_compra_json, atraccion_id = atraccion_id )
+                return Ticket.create(
+                    visitante_id=visitante_id,
+                    fecha_compra=datetime.now(),
+                    fecha_visita=fecha_visita,
+                    tipo_ticket=tipo_ticket,
+                    detalles_compra=detalles_compra_json,
+                    atraccion_id=atraccion_id
+                )
             else:
-                return Ticket.create(visitante_id=visitante_id, fecha_visita = fecha_visita, tipo_ticket = tipo_ticket,atraccion_id = atraccion_id)
+                return Ticket.create(
+                    visitante_id=visitante_id,
+                    fecha_compra=datetime.now(),
+                    fecha_visita=fecha_visita,
+                    tipo_ticket=tipo_ticket,
+                    atraccion_id=atraccion_id
+                )
         except Exception as e:
             print(e)
+
             
-            
+    
+    @staticmethod
+    def search_by_id_ticket(id):
+        try:
+            return Ticket.get(Ticket.id == id)
+        except DoesNotExist:
+            return None
+        
     @staticmethod
     def get_all():
         return list(Ticket.select())
 
     @staticmethod
     def get_by_visitante(visitante_id):
-        return list(Ticket.select().where(Ticket.visitante == visitante_id))
+        return list(Ticket.select().where(Ticket.visitante_id == visitante_id))
 
     @staticmethod
     def get_by_atraccion(atraccion_id):
-        return list(Ticket.select().where(Ticket.atraccion == atraccion_id))
+        return list(Ticket.select().where(Ticket.atraccion_id == atraccion_id))
 
     @staticmethod
     def marcar_usado(ticket_id):

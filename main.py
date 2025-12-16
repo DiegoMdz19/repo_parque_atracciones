@@ -287,22 +287,144 @@ while True:
                 match opcion:
                     case "1":
                         print("\n----CREAR TICKET----\n")
+                        while True:
+                            try:
+                                visitante_id = int(input("ID del visitante: "))
+                                Visitante.get(Visitante.id == visitante_id)
+                                break
+                            except ValueError:
+                                print("El ID debe ser un número")
+                            except Visitante.DoesNotExist:
+                                print("No existe ningún visitante con ese ID")
+
+                        while True:
+                            id_atraccion_input = input("ID de la atracción (vacío si es para cualquiera): ").strip()
+                            if id_atraccion_input == "":
+                                atraccion_id = None
+                                break
+                            try:
+                                atraccion_id = int(id_atraccion_input)
+                                Atraccion.get(Atraccion.id == atraccion_id)
+                                break
+                            except ValueError:
+                                print("El ID debe ser un número")
+                            except Atraccion.DoesNotExist:
+                                print("No existe ninguna atracción con ese ID")
+
+                        while True:
+                            fecha_visita_input = input("Fecha visita (YYYY-MM-DD): ")
+                            try:
+                                fecha_visita = datetime.strptime(fecha_visita_input, "%Y-%m-%d").date()
+                                break
+                            except ValueError:
+                                print("Formato de fecha incorrecto")
+
+                        while True:
+                            tipo_ticket = input("Tipo de ticket (general/colegio/empleado): ").lower()
+                            if tipo_ticket in ["general", "colegio", "empleado"]:
+                                break
+                            else:
+                                print("Tipo de ticket no válido")
+
+                        precio = input("Precio del ticket: ")
+                        descuentos = input("Descuentos (separados por comas o vacío): ")
+                        servicios = input("Servicios extra (separados por comas o vacío): ")
+                        metodo_pago = input("Método de pago: ")
+
+                        detalles_compra = {
+                            "precio": precio,
+                            "descuentos_aplicados": [d.strip() for d in descuentos.split(",")] if descuentos else [],
+                            "servicios_extra": [s.strip() for s in servicios.split(",")] if servicios else [],
+                            "metodo_pago": metodo_pago
+                        }
+
+                        ticket = RepoTicket.create_ticket(
+                            visitante_id=visitante_id,
+                            fecha_visita=fecha_visita,
+                            tipo_ticket=tipo_ticket,
+                            detalles_compra_json=detalles_compra,
+                            atraccion_id=atraccion_id
+                        )
+
+                        if ticket:
+                            print(f"Ticket creado correctamente con ID {ticket.id}")
+
                     case "2":
                         print("\n----BUSCAR TICKET (ID)----\n")
+                        while True:
+                            try:
+                                id_ticket = int(input("Id de ticket a buscar: "))
+                                break
+                            except ValueError:
+                                print("El ID debe ser un número. Intenta de nuevo.")
+                        try:
+                            ticket = RepoTicket.search_by_id_ticket(id_ticket)
+                            print(ticket)
+                        except Exception as e:
+                            print(f"No se encontró ticket con ID {id}")
+
                     case "3":
                         print("\n----OBTENER TODOS LOS TICKETS----\n")
+                        for ticket in RepoTicket.get_all():
+                            if not ticket:
+                                print("No existen tickets")
+                            else:
+                                print(ticket)
                     case "4":
                         print("\n----MARCAR TICKET COMO USADO----\n")
+                        while True:
+                            try:
+                                id_ticket = int(input("Id del ticket a usar: "))
+                            except ValueError:
+                                print("El id debe ser un número")
+
+                            try:
+                                ticket = Ticket.get(Ticket.id == id_ticket)
+                            except Ticket.DoesNotExist:
+                                print(f"No existe ningún ticket con el id {id_ticket}")
+                                break
+
+                            if ticket.usado:
+                                print("Este ticket ya está usado")
+                            else:
+                                RepoTicket.marcar_usado(id_ticket)
+                                print(f"Ticket #{id_ticket} usado correctamente")
+                            break
+
                     case "5":
                         print("\n----OBTENER TICKETS POR VISITANTE (ID)----\n")
+                        while True:
+                            try:
+                                id_visitante = int(input("ID del visitante: "))
+                                tickets = RepoTicket.get_by_visitante(id_visitante)
+                                if not tickets:
+                                    print(f"No existe el visitante con ID {id_visitante} o no tiene tickets")
+                                else:
+                                    for ticket in tickets:
+                                        print(ticket)
+                                    break
+                            except ValueError:
+                                print("El id debe ser un número")
                     case "6":
                         print("\n----OBTENER TICKETS POR ATRACCIÓN (ID)----\n")
+                        while True:
+                            try:
+                                id_atraccion = int(input("ID de la atracción: "))
+                                tickets = RepoTicket.get_by_atraccion(id_atraccion)
+                                if not tickets:
+                                    print(f"No existe la atracción con ID {id_atraccion} o no tiene tickets")
+                                else:
+                                    for ticket in tickets:
+                                        print(ticket)
+                                    break
+                            except ValueError:
+                                print("El id debe ser un número")
                     case "7":
                         print("Volviendo al menú principal...")
                         break
                     case _:
                         print("Opción no válida")
-        #CONSULTAS
+        #CONSULTAS falta test
         case "4":
             while True:
                 print("\n----CONSULTAS----\n" \
@@ -390,7 +512,7 @@ while True:
                         break
                     case _:
                         print("Opción no válida")
-        #JSONB falta testing
+        #JSONB falta test
         case "5":
             while True:
                 print("\n----MODIFICACIONES EN JSONB----\n" \
@@ -486,7 +608,7 @@ while True:
                         break
                     case _:
                         print("Opción no válida")
-        #CONSULTAS ÚTILES
+        #CONSULTAS ÚTILES falta test
         case "6":
             while True:
                 print("\n----CONSULTAS ÚTILES----\n" \
