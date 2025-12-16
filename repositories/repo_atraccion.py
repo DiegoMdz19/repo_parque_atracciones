@@ -18,54 +18,42 @@ class RepoAtraccion:
         return list(Atraccion.select())
     
     @staticmethod
-    def search_by_id_atraccion(id):
-        try:
-            return Atraccion.get(Atraccion.id ==  id)
-        except DoesNotExist:
-            return None
-    @staticmethod
     def search_disp():
-        
-        atrac = (
-            Atraccion.select()
-            .where(Atraccion.activa == True)
-        )
+        return list(Atraccion.select().where(Atraccion.activa == True))
 
-        return list(atrac)
-    
+    @staticmethod
+    def search_by_id(id):
+        return Atraccion.get(Atraccion.id == id)
+
     @staticmethod
     def modificar_activa(id):
         atrac = RepoAtraccion.search_by_id(id)
         if not atrac:
-            return
-        if Atraccion.activa == True:
-            Atraccion.activa = False
-        else:
-            Atraccion.activa = True
+            return None
+
+        atrac.activa = not atrac.activa
         atrac.save()
         return atrac
 
     @staticmethod
     def delete(id):
-        return Atraccion.delete().where(Atraccion.id == id)
+        return Atraccion.delete().where(Atraccion.id == id).execute()
 
     @staticmethod
     def mayor_cientoveinte():
-        visit = (
+        return list(
             Atraccion.select()
-            .where(Atraccion.detalles["duracion_segundos"] > 120)
+            .where(Atraccion.detalles["duracion_segundos"] > "120")
         )
 
-        return list(visit)
-    
+
     @staticmethod
     def mayor_ocho():
-        visit = (
+        return list(
             Atraccion.select()
-            .where(Atraccion.detalles["intensidad"] > 7)
+            .where(Atraccion.detalles["intensidad"] > "7")
         )
 
-        return list(visit)
 
     @staticmethod
     def nueva_caracteristica_atraccion(id_atraccion, caracteristica):
