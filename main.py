@@ -26,6 +26,7 @@ while True:
         "\n7. Salir\n")
     opcion = input("Selecciona una opción: ")
     match opcion:
+        #VISITANTES -- FUNCIONA BIEN TODO
         case "1":
             while True:
                 print("\n----VISITANTES----\n" \
@@ -113,7 +114,6 @@ while True:
                         print("\n----OBTENER TODOS LOS VISITANTES----\n")
                         for visitante in RepoVisitante.search_all():
                             print(visitante)
-
                     case "4":
                         print("\n----ELIMINAR VISITANTE----\n")
                         id_visitante = int(input("ID del visitante a eliminar: "))
@@ -130,6 +130,7 @@ while True:
                         break
                     case _:
                         print("Opción no válida")
+        #ATRACCIONES
         case "2":
             while True:
                 print("\n----ATRACCIONES----\n" \
@@ -144,8 +145,85 @@ while True:
                 match opcion:
                     case "1":
                         print("\n----CREAR ATRACCIÓN----\n")
+                        nombre = input("\nNombre de la nueva atracción: \n")
+                        while True:
+                                tipo = input("\nTipo (extrema/familiar/infantil/acuatica): \n")
+                                if tipo in ['extrema','familiar','infantil','acuatica']:
+                                    break
+                                else:
+                                    print("Tipo no válido. Prueba otra vez")
+                        while True:
+                            try:
+                                altura_minima = int(input("Altura minima (cm): "))
+                                break
+                            except ValueError:
+                                print("Altura no válida. Ingresa un número.")
+
+                        while True:
+                            try:
+                                duracion_segundos = int(input("Duración de la atracción (segundos): "))
+                                break
+                            except ValueError:
+                                print("Duración no válida. Debe ser un número")
+                        
+                        while True:
+                            try:
+                                capacidad_por_turno = int(input("Capacidad de la atracción: "))
+                                break
+                            except ValueError:
+                                print("Capacidad no válida. Debe ser un número entero")
+
+                        while True:
+                            try:
+                                intensidad = int(input("Intensidad de la atracción (0-10): "))
+                                if intensidad >= 0 and intensidad <= 10:
+                                    break
+                                else:
+                                    print("La intensidad debe ser entre 0 y 10")
+                            except ValueError:
+                                print("Intensidad no válida. Debe ser un número entero del 0 al 10")
+
+                        caracteristicas = input("Caracteristicas (separadas por coma): ").split(",")
+                        apertura = input("Hora de apertura (hh:mm): ")
+                        cierre = input("Hora de cierre (hh:mm): ")
+                        mantenimiento = input("Horarios de mantenimiento(hh:mm-hh:mm)(para insertar varios separar por comas): ").split(",")
+
+
+                        detalles = {
+                            "duracion_segundos": duracion_segundos,
+                            "capacidad_por_turno": capacidad_por_turno,
+                            "intensidad": intensidad,
+                            "caracteristicas": [c.strip() for c in caracteristicas],
+                            "horarios": {
+                                "apertura" : apertura,
+                                "cierre" : cierre,
+                                "mantenimiento" : [m.strip() for m in mantenimiento]
+                            }
+                        }
+                        
+                        try:
+                            atraccion = RepoAtraccion.create_atraccion(
+                                nombre=nombre,
+                                tipo=tipo,
+                                altura_minima=altura_minima,
+                                detalles=detalles
+                            )
+
+                            if atraccion:
+                                print(f"Atraccion '{atraccion.nombre}' creada correctamente con ID {atraccion.id}")
+                        except Exception as e:
+                            print(f"Error al crear la atracción  : {e}")
                     case "2":
                         print("\n----BUSCAR ATRACCIÓN (ID)----\n")
+                        try:
+                            atraccion_id = int(input("Id de la atracción: "))
+                            atraccion = RepoAtraccion.search_by_id_atraccion(atraccion_id)
+                            if atraccion is None:
+                                print(f"No existe una atracción con el id: {atraccion_id}")
+                            else:
+                                print(atraccion)
+                        except Exception as e:
+                            print("El id debe ser numérico")
                     case "3":
                         print("\n----OBTENER TODAS LAS ATRACCIONES----\n")
                     case "4":
@@ -159,6 +237,7 @@ while True:
                         break
                     case _:
                         print("Opción no válida")
+        #TICKETS
         case "3":
             while True:
                 print("\n----TICKETS----\n" \
@@ -188,6 +267,7 @@ while True:
                         break
                     case _:
                         print("Opción no válida")
+        #CONSULTAS
         case "4":
             while True:
                 print("\n----CONSULTAS----\n" \
@@ -223,6 +303,7 @@ while True:
                         break
                     case _:
                         print("Opción no válida")
+        #JSONB
         case "5":
             while True:
                 print("\n----MODIFICACIONES EN JSONB----\n" \
@@ -252,6 +333,7 @@ while True:
                         break
                     case _:
                         print("Opción no válida")
+        #CONSULTAS ÚTILES
         case "6":
             while True:
                 print("\n----CONSULTAS ÚTILES----\n" \

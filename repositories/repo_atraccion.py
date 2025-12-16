@@ -4,7 +4,7 @@ from models.model_atraccion import Atraccion
 
 class RepoAtraccion:
     @staticmethod
-    def create(nombre,tipo,altura_minima,detalles=None):
+    def create_atraccion(nombre,tipo,altura_minima,detalles=None):
         try:
             if detalles:
                 return Atraccion.create(nombre=nombre,tipo=tipo,altura_minima=altura_minima,detalles=detalles)
@@ -14,13 +14,15 @@ class RepoAtraccion:
             print(e)
 
     @staticmethod
-    def search_all():
+    def search_all_atraccion():
         return list(Atraccion.select())
     
     @staticmethod
-    def search_by_id(id):
-        return Atraccion.get(Atraccion.id ==  id)
-    
+    def search_by_id_atraccion(id):
+        try:
+            return Atraccion.get(Atraccion.id ==  id)
+        except DoesNotExist:
+            return None
     @staticmethod
     def search_disp():
         
