@@ -10,9 +10,9 @@ from ingesta import ingesta_datos
 import time
 from datetime import datetime
 
-inicializar_base([Visitante,Atraccion,Ticket])
-print("Base de datos inicializada correctamente, tablas reseteadas")
-ingesta_datos()
+#inicializar_base([Visitante,Atraccion,Ticket])
+#print("Base de datos inicializada correctamente, tablas reseteadas")
+#ingesta_datos()
 print("Iniciando menú Pichalandia...")
 time.sleep(1)
 while True:
