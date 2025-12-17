@@ -8,7 +8,7 @@ import json
 
 class Ticket(BaseModel):
     visitante_id = ForeignKeyField(Visitante, backref='tickets', on_delete= "CASCADE", on_update="CASCADE")
-    atraccion_id = ForeignKeyField(Atraccion, backref='tickets', null = True) # null si vale para cualquier atraccion
+    atraccion_id = ForeignKeyField(Atraccion, backref='tickets', null = True, on_delete= "CASCADE", on_update= "CASCADE") # null si vale para cualquier atraccion
     fecha_compra = DateTimeField()
     fecha_visita = DateField()
     tipo_ticket = TextField(constraints= [Check("tipo_ticket IN ('general','colegio','empleado')")])
