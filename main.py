@@ -10,9 +10,9 @@ from ingesta import ingesta_datos
 import time
 from datetime import datetime
 
-inicializar_base([Visitante,Atraccion,Ticket])
-print("Base de datos inicializada correctamente, tablas reseteadas")
-ingesta_datos()
+#inicializar_base([Visitante,Atraccion,Ticket])
+#print("Base de datos inicializada correctamente, tablas reseteadas")
+#ingesta_datos()
 print("Iniciando menú Pichalandia...")
 time.sleep(1)
 while True:
@@ -52,14 +52,14 @@ while True:
                                 print("Altura no válida. Ingresa un número.")
                         fecha_registro = datetime.now()
                         while True:
-                            tipo_favorito = input("Tipo favorito (extrema/familiar/infantil/acuatica): ")
+                            tipo_favorito = input("Tipo favorito (extrema/familiar/infantil/acuatica): ").strip().lower()
                             if tipo_favorito in ['extrema','familiar','infantil','acuatica']:
                                 break
                             else:
                                 print("Tipo no válido. Prueba otra vez")
 
-                        restricciones_input = input("Restricciones (separa por comas si hay varias, o deja vacio): ")
-                        if restricciones_input.strip() == "":
+                        restricciones_input = input("Restricciones (separa por comas si hay varias, o deja vacio): ").lower()
+                        if restricciones_input == "":
                             restricciones = []
                         else:
                             restricciones = [r.strip() for r in restricciones_input.split(",")]
@@ -153,9 +153,9 @@ while True:
                 match opcion:
                     case "1":
                         print("\n----CREAR ATRACCIÓN----\n")
-                        nombre = input("\nNombre de la nueva atracción: \n")
+                        nombre = input("\nNombre de la nueva atracción: ")
                         while True:
-                                tipo = input("\nTipo (extrema/familiar/infantil/acuatica): \n")
+                                tipo = input("\nTipo (extrema/familiar/infantil/acuatica): ")
                                 if tipo in ['extrema','familiar','infantil','acuatica']:
                                     break
                                 else:
