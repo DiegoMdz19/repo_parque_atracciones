@@ -67,16 +67,19 @@ while True:
                         historial_visitas = []
                         agregar_historial = input("¿Desea agregar historial de visitas? (s/n): ").lower().strip()
                         while agregar_historial == "s":
-                            fecha_visita_input = input("Fecha visita (YYYY-MM-DD): ")
-                            try:
-                                fecha_visita = datetime.strptime(fecha_visita_input, "%Y-%m-%d").strftime("%Y-%m-%d")
-                                atracciones_visitadas = int(input("Cantidad de atracciones visitadas: "))
-                                historial_visitas.append({
-                                    "fecha": fecha_visita,
-                                    "atracciones_visitadas": atracciones_visitadas
-                                })
-                            except ValueError:
-                                print("Datos incorrectos, intenta de nuevo.")
+                            while True:  
+                                fecha_visita_input = input("Fecha visita (YYYY-MM-DD): ").strip()
+                                try:
+                                    fecha_visita = datetime.strptime(fecha_visita_input, "%Y-%m-%d").strftime("%Y-%m-%d")
+                                    atracciones_visitadas = int(input("Cantidad de atracciones visitadas: "))
+                                    historial_visitas.append({
+                                        "fecha": fecha_visita,
+                                        "atracciones_visitadas": atracciones_visitadas
+                                    })
+                                    break  
+                                except ValueError:
+                                    print("Datos incorrectos, intenta de nuevo.")
+                            
                             agregar_historial = input("¿Agregar otra visita? (s/n): ").lower().strip()
 
                         preferencias = {
@@ -590,12 +593,13 @@ while True:
                             except Atraccion.DoesNotExist:
                                 print(f"No se encuentra ningun visitante con el id {id_visitante}")
                         while True:
-                            fecha_visita = input("Fecha visita (YYYY-MM-DD): ").strip()
-                            try:
-                                datetime.strptime(fecha_visita, "%Y-%m-%d")
-                                break
-                            except ValueError:
-                                print("Fecha no válida, recuerda el formato YYYY-MM-DD")
+                            while True:
+                                fecha_visita_input = input("Fecha visita (YYYY-MM-DD): ").strip()
+                                try:
+                                    fecha_visita = datetime.strptime(fecha_visita_input, "%Y-%m-%d").strftime("%Y-%m-%d")
+                                    break
+                                except ValueError:
+                                    print("Fecha no válida, recuerda el formato YYYY-MM-DD")
                         while True:
                             try:
                                 cantidad = int(input("Atracciones visitadas: "))
