@@ -10,9 +10,9 @@ from ingesta import ingesta_datos
 import time
 from datetime import datetime
 
-#inicializar_base([Visitante,Atraccion,Ticket])
-#print("Base de datos inicializada correctamente, tablas reseteadas")
-#ingesta_datos()
+inicializar_base([Visitante,Atraccion,Ticket])
+print("Base de datos inicializada correctamente, tablas reseteadas")
+ingesta_datos()
 print("Iniciando menú Pichalandia...")
 time.sleep(1)
 while True:
@@ -26,7 +26,7 @@ while True:
         "\n7. Salir\n")
     opcion = input("Selecciona una opción: ")
     match opcion:
-        #VISITANTES -- FUNCIONA BIEN TODO - FALTA TEST
+        #VISITANTES -- FUNCIONA BIEN TODO 
         case "1":
             while True:
                 print("\n----VISITANTES----\n" \
@@ -42,7 +42,7 @@ while True:
                         print("\n----CREAR VISITANTE----\n")
                         
                         nombre = input("Nombre completo: ")
-                        email = input("Email: ")
+                        email = input("Email: ").strip()
 
                         while True:
                             try:
@@ -138,7 +138,7 @@ while True:
                         break
                     case _:
                         print("Opción no válida")
-        #ATRACCIONES -- FUNCIONA TODO BIEN- FALTA TEST
+        #ATRACCIONES -- FUNCIONA TODO BIEN
         case "2":
             while True:
                 print("\n----ATRACCIONES----\n" \
@@ -155,35 +155,35 @@ while True:
                         print("\n----CREAR ATRACCIÓN----\n")
                         nombre = input("\nNombre de la nueva atracción: ")
                         while True:
-                                tipo = input("\nTipo (extrema/familiar/infantil/acuatica): ")
+                                tipo = input("\nTipo (extrema/familiar/infantil/acuatica): ").strip().lower()
                                 if tipo in ['extrema','familiar','infantil','acuatica']:
                                     break
                                 else:
                                     print("Tipo no válido. Prueba otra vez")
                         while True:
                             try:
-                                altura_minima = int(input("Altura minima (cm): "))
+                                altura_minima = int(input("Altura minima (cm): ").strip())
                                 break
                             except ValueError:
                                 print("Altura no válida. Ingresa un número.")
 
                         while True:
                             try:
-                                duracion_segundos = int(input("Duración de la atracción (segundos): "))
+                                duracion_segundos = int(input("Duración de la atracción (segundos): ").strip())
                                 break
                             except ValueError:
                                 print("Duración no válida. Debe ser un número")
                         
                         while True:
                             try:
-                                capacidad_por_turno = int(input("Capacidad de la atracción: "))
+                                capacidad_por_turno = int(input("Capacidad de la atracción: ").strip())
                                 break
                             except ValueError:
                                 print("Capacidad no válida. Debe ser un número entero")
 
                         while True:
                             try:
-                                intensidad = int(input("Intensidad de la atracción (0-10): "))
+                                intensidad = int(input("Intensidad de la atracción (0-10): ").strip())
                                 if intensidad >= 0 and intensidad <= 10:
                                     break
                                 else:
@@ -192,8 +192,8 @@ while True:
                                 print("Intensidad no válida. Debe ser un número entero del 0 al 10")
 
                         caracteristicas = input("Caracteristicas (separadas por coma): ").split(",")
-                        apertura = input("Hora de apertura (hh:mm): ")
-                        cierre = input("Hora de cierre (hh:mm): ")
+                        apertura = input("Hora de apertura (hh:mm): ").strip()
+                        cierre = input("Hora de cierre (hh:mm): ").strip()
                         mantenimiento = input("Horarios de mantenimiento(hh:mm-hh:mm)(para insertar varios separar por comas): ").split(",")
 
 
@@ -245,8 +245,11 @@ while True:
                             print(atraccion)
                     case "5":
                         print("\n----ELIMINAR UNA ATRACCIÓN (ID)----\n")
-                        id_atraccion = int(input("ID de la atracción a eliminar: "))
-                        RepoAtraccion.delete_atraccion(id_atraccion)
+                        try:
+                            id_atraccion = int(input("ID de la atracción a eliminar: "))
+                            RepoAtraccion.delete_atraccion(id_atraccion)
+                        except ValueError :
+                            print("El ID debe ser numérico. Intenta de nuevo.")
                         print(f"Atracción con id: {id_atraccion} eliminada correctamente.")
                     case "6":
                         print("\n----CAMBIAR ESTADO DE UNA ATRACCIÓN (ACTIVO/INACTIVO)----\n")
@@ -272,7 +275,7 @@ while True:
                         break
                     case _:
                         print("Opción no válida")
-        #TICKETS -- FALTA TEST
+        #TICKETS 
         case "3":
             while True:
                 print("\n----TICKETS----\n" \
@@ -289,7 +292,7 @@ while True:
                         print("\n----CREAR TICKET----\n")
                         while True:
                             try:
-                                visitante_id = int(input("ID del visitante: "))
+                                visitante_id = int(input("ID del visitante: ").strip())
                                 Visitante.get(Visitante.id == visitante_id)
                                 break
                             except ValueError:
@@ -320,16 +323,16 @@ while True:
                                 print("Formato de fecha incorrecto")
 
                         while True:
-                            tipo_ticket = input("Tipo de ticket (general/colegio/empleado): ").lower()
+                            tipo_ticket = input("Tipo de ticket (general/colegio/empleado): ").strip().lower()
                             if tipo_ticket in ["general", "colegio", "empleado"]:
                                 break
                             else:
                                 print("Tipo de ticket no válido")
 
-                        precio = input("Precio del ticket: ")
+                        precio = input("Precio del ticket: ").strip()
                         descuentos = input("Descuentos (separados por comas o vacío): ")
                         servicios = input("Servicios extra (separados por comas o vacío): ")
-                        metodo_pago = input("Método de pago: ")
+                        metodo_pago = input("Método de pago: ").strip()
 
                         detalles_compra = {
                             "precio": precio,
@@ -353,7 +356,7 @@ while True:
                         print("\n----BUSCAR TICKET (ID)----\n")
                         while True:
                             try:
-                                id_ticket = int(input("Id de ticket a buscar: "))
+                                id_ticket = int(input("Id de ticket a buscar: ").strip())
                                 break
                             except ValueError:
                                 print("El ID debe ser un número. Intenta de nuevo.")
@@ -374,7 +377,7 @@ while True:
                         print("\n----MARCAR TICKET COMO USADO----\n")
                         while True:
                             try:
-                                id_ticket = int(input("Id del ticket a usar: "))
+                                id_ticket = int(input("Id del ticket a usar: ").strip())
                             except ValueError:
                                 print("El id debe ser un número")
 
@@ -424,7 +427,7 @@ while True:
                         break
                     case _:
                         print("Opción no válida")
-        #CONSULTAS falta test
+        #CONSULTAS 
         case "4":
             while True:
                 print("\n----CONSULTAS----\n" \
@@ -512,7 +515,7 @@ while True:
                         break
                     case _:
                         print("Opción no válida")
-        #JSONB falta test
+        #JSONB 
         case "5":
             while True:
                 print("\n----MODIFICACIONES EN JSONB----\n" \
@@ -543,7 +546,7 @@ while True:
                         print("\n----ELIMINAR UNA RESTRICCIÓN A UN VISITANTE----\n")                  
                         while True:
                             try:
-                                id_visitante = int(input("Id del visitante: "))
+                                id_visitante = int(input("Id del visitante: ").strip())
                                 visitante = Visitante.get(Visitante.id == id_visitante)
                                 break 
                             except ValueError:
@@ -608,7 +611,7 @@ while True:
                         break
                     case _:
                         print("Opción no válida")
-        #CONSULTAS ÚTILES falta test
+        #CONSULTAS ÚTILES 
         case "6":
             while True:
                 print("\n----CONSULTAS ÚTILES----\n" \
@@ -641,7 +644,7 @@ while True:
                     case "4":
                         print("\n----ATRACCIONES COMPATIBLES PARA UN VISITANTE----\n")
                         try:
-                            id_visitante = input("Id del visitante: ")
+                            id_visitante = input("Id del visitante: ").strip()
                         except ValueError:
                             print("El id debe ser un número")
                         atracciones = RepoAtraccion.atracciones_compatibles(id_visitante)
