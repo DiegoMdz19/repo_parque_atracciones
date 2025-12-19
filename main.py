@@ -108,7 +108,7 @@ while True:
                             visitante = RepoVisitante.search_by_id(id)
                             print(visitante)
                         except Exception as e:
-                            print(f"No se encontró visitante con ID {id}")
+                            print(f"No se encontró visitante con ID {id_visitante}")
                     case "3":
                         print("\n----OBTENER TODOS LOS VISITANTES----\n")
                         for visitante in RepoVisitante.search_all():
@@ -225,7 +225,7 @@ while True:
                         print("\n----BUSCAR ATRACCIÓN (ID)----\n")
                         while True:
                             try:
-                                atraccion_id = int(input("Id de la atracción: "))
+                                atraccion_id = int(input("Id de la atracción: ").strip())
                                 break
                             except Exception as e:
                                 print("El id debe ser numérico")
@@ -368,10 +368,11 @@ while True:
 
                     case "3":
                         print("\n----OBTENER TODOS LOS TICKETS----\n")
-                        for ticket in RepoTicket.get_all():
-                            if not ticket:
-                                print("No existen tickets")
-                            else:
+                        tickets = RepoTicket.get_all()
+                        if not tickets:
+                            print("No existen tickets")
+                        else:
+                            for ticket in tickets:
                                 print(ticket)
                     case "4":
                         print("\n----MARCAR TICKET COMO USADO----\n")
@@ -440,7 +441,7 @@ while True:
                     "\n7. Tickets con descuento 'estudiante'\n" \
                     "\n8. Atracciones con al menos un horario de mantenimiento programado\n" \
                     "\n9. Salir\n")
-                opcion = input("Selecciona una opción: ")
+                opcion = input("Selecciona una opción: ").strip().lower()
                 match opcion:
                     case "1":
                         print("\n----VISITANTES CON PREFERENCIA POR ATRACCIONES 'EXTREMAS'----\n")
@@ -474,7 +475,7 @@ while True:
                             print("No hay atracciones con más de 120 segundos de duración")
                         else:
                             for atraccion in atracciones:
-                                duracion = int(atraccion.detalles.get("duracion_segundos",))
+                                duracion = int(atraccion.detalles.get("duracion_segundos", 0))
                                 print(f"{atraccion.nombre}, Duracion: {duracion}")
                     case "5":
                         print("\n----VISITANTES CON PROBLEMAS CARDIACOS----\n")
@@ -644,7 +645,7 @@ while True:
                     case "4":
                         print("\n----ATRACCIONES COMPATIBLES PARA UN VISITANTE----\n")
                         try:
-                            id_visitante = input("Id del visitante: ").strip()
+                            id_visitante = int(input("Id del visitante: ").strip())
                         except ValueError:
                             print("El id debe ser un número")
                         atracciones = RepoAtraccion.atracciones_compatibles(id_visitante)
