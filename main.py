@@ -13,10 +13,10 @@ from datetime import datetime
 inicializar_base([Visitante,Atraccion,Ticket])
 print("Base de datos inicializada correctamente, tablas reseteadas")
 ingesta_datos()
-print("Iniciando menú Pichalandia...")
+print("Iniciando menú Valhalla Park...")
 time.sleep(1)
 while True:
-    print("----MENU PICHALANDIA----\n" \
+    print("----MENU VALLHALLA PARK k----\n" \
         "\n1. Visitantes\n" \
         "\n2. Atracciones\n" \
         "\n3. Tickets\n" \
@@ -661,7 +661,7 @@ while True:
                     case _:
                         print("Opción no válida")
         case "7":
-            print("\nSaliendo de PICHALANDIA...")
+            print("\nSaliendo de Valhalla Park...")
             break
         case _:
             print("\nOpción no válida\n")
