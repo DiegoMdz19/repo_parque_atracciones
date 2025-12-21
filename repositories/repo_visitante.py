@@ -46,7 +46,7 @@ class RepoVisitante:
     @staticmethod
     def eliminar_restriccion(id_visitante, restriccion):
         try:
-            visitante = Visitante.get(Visitante.id == id_visitante)
+           visitante = RepoVisitante.search_by_id(id_visitante)
         except Visitante.DoesNotExist:
             return None
         
