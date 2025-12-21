@@ -72,7 +72,7 @@ class RepoVisitante:
     @staticmethod
     def anyadir_visita(id_visitante, fecha_string, cantidad):
         try:
-            visitante = Visitante.get(Visitante.id == id_visitante)
+            visitante = RepoVisitante.search_by_id(id_visitante)
         except Visitante.DoesNotExist:
             print(f"Error, el visitante [{id_visitante}] no existe")
             return None

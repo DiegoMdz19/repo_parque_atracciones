@@ -68,7 +68,7 @@ class RepoAtraccion:
     #corregido ya
     @staticmethod
     def nueva_caracteristica_atraccion(id_atraccion, caracteristica):
-        atraccion = Atraccion.get(Atraccion.id == id_atraccion)
+        atraccion = RepoAtraccion.search_by_id_atraccion(id_atraccion)
 
         if not atraccion:
             print(f"Error, la atracción [{id_atraccion}] no existe")

@@ -70,7 +70,7 @@ class RepoTicket:
 
     @staticmethod
     def cambiar_precio_ticket(id_ticket, precio_nuevo):
-        ticket = Ticket.get(Ticket.id == id_ticket)
+        ticket = RepoTicket.search_by_id_ticket(id_ticket)
         if ticket:
             if precio_nuevo > 0:
                 ticket.detalles_compra["precio"] = precio_nuevo

@@ -592,14 +592,14 @@ while True:
                                 print("El id debe ser numérico")
                             except Atraccion.DoesNotExist:
                                 print(f"No se encuentra ningun visitante con el id {id_visitante}")
+                    
                         while True:
-                            while True:
-                                fecha_visita_input = input("Fecha visita (YYYY-MM-DD): ").strip()
-                                try:
-                                    fecha_visita = datetime.strptime(fecha_visita_input, "%Y-%m-%d").strftime("%Y-%m-%d")
-                                    break
-                                except ValueError:
-                                    print("Fecha no válida, recuerda el formato YYYY-MM-DD")
+                            fecha_visita_input = input("Fecha visita (YYYY-MM-DD): ").strip()
+                            try:
+                                fecha_visita = datetime.strptime(fecha_visita_input, "%Y-%m-%d").strftime("%Y-%m-%d")
+                                break
+                            except ValueError:
+                                print("Fecha no válida, recuerda el formato YYYY-MM-DD")
                         while True:
                             try:
                                 cantidad = int(input("Atracciones visitadas: "))
